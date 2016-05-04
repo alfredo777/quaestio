@@ -170,17 +170,17 @@ Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion,
   var init = avalue;
   var finish = bvalue;
   var firstn = init;
-  var coleccionn = [ coleccion+"greeding.png", coleccion+"big_smile.png", coleccion+"smile.png", coleccion+"bad_smile.png", coleccion+"unhappy.png", coleccion+"sigh.png", coleccion+"wicked.png",  coleccion+"beyond_endurance.png", coleccion+"cry.png"  ];
+  var coleccionn = [ coleccion+"greeding.png", coleccion+"big_smile.png", coleccion+"smile.png", coleccion+"bad_smile.png", coleccion+"what.png", coleccion+"misdoubt.png", coleccion+"sigh.png", coleccion+"wicked.png",coleccion+"unhappy.png", coleccion+"surprise.png" ];
   out = "<table class='table table-striped table-bordered'><tr>";
-  /*for(var i=init, l=finish+1; i<l; i++) {
+  for(var i=init, l=finish+1; i<l; i++) {
     out = out + "<td><center>"+i+'</center></td>';
-  }*/
+  }
   out = out + "</tr><tr>";
   for(var i=init, l=finish+1; i<l; i++) {
     if (i == init) {
-    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi emogi"><img src="'+coleccionn[i-1]+'"/></label> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" style="display:none;" checked></input></td></center>';
+    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi emogi"><img src="'+coleccionn[10-i]+'" width="90px"/></label> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" style="display:none;" checked></input></td></center>';
     }else{
-    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi"><img src="'+coleccionn[i-1]+'"/> </label><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'"  style="display:none;" ></input></td></center>';
+    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi"><img src="'+coleccionn[10-i]+'" width="90px"/> </label><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'"  style="display:none;" ></input></td></center>';
     }
 
   }
