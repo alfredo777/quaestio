@@ -1,0 +1,109 @@
+<div class="nested-fields col-md-12">
+  <div class="row panel" style="background: #2C3E50; color: #fff;">
+  <div class="col-md-12" style="margin-top: -35px;">
+    <br/>
+    <div style="margin-right: -16px;">
+    <%=  link_to_remove_association("X", f, :class => 'btn btn-primary pull-right',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <div class="col-md-12">
+        <div class="col-md-6">
+          <h4>Escribe las pregunta</h4>
+          <%= f.text_field :titulo, placeholder: "Pregunta", class: "form-control"%><br/>
+          <%= f.select(:tipo) do %>
+            <% type_cuestions.each do |c|-%>
+            <%= content_tag(:option, c.first, value: c.last, target: c[1], class: c[1]) %>
+            <%end%>
+          <%end%><br/><br/>
+          <%= f.file_field :imagen %>
+          <br/><br/>
+        </div>
+        <div class="col-md-6 modelre">
+           <h4>Zona de respuesta</h4>
+          <fieldset class="abierta tiporespuesta" style="display:none;">
+            <%= f.text_area :descripccion, placeholder: "Descripcción Abierta", class: "form-control"%>
+          </fieldset>
+          <fieldset class="rango tiporespuesta" style="display:none;">
+            De <%= f.select :de_a, (1..100)%> a <%= f.select :de_b, (1..100)%><br/>
+            <label>Agregar Emogi <%= f.check_box :emogi %> </label>
+            <%= f.select(:coleccion_emogi) do %>
+              <% type_emogi.each do |c|-%>
+                <%= content_tag(:option, c.first, value: c.last) %>
+              <%end%>
+            <%end%>
+          </fieldset>
+          <fieldset id="respuestas" class="multiple tiporespuesta">
+            <%= f.fields_for :respuestas  do |fd| %>
+            <%= render partial: "/manager/respuesta_fields", locals: {f: fd}%>
+            <%end%>
+            <%= link_to_add_association 'Agregar Respuesta', f, :respuestas, force_non_association_create: false,class:"btn btn-default pull-right" %>
+          </fieldset>
+          <fieldset id="respuestasx" class="multiplex tiporespuesta" style="display:none;">
+            <%= f.fields_for :respuestas  do |fd| %>
+            <%= render partial: "/manager/respuesta_valor_fields", locals: {f: fd}%>
+            <%end%>
+            <%= link_to_add_association 'Agregar Respuesta con valor', f, :respuestas, force_non_association_create: false,  partial: '/manager/respuesta_valor_fields', class:"btn btn-default pull-right" %>
+             <br/>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){
+$('select').addClass("form-control");
+
+$("#respuestas a.add_fields").
+data("association-insertion-position", 'before').
+data("association-insertion-node", 'this');
+
+$("#respuestasx a.add_fields").
+data("association-insertion-position", 'before').
+data("association-insertion-node", 'this');
+new_class = new Date().getTime();
+
+$('fieldset.abierta').addClass('x'+new_class);
+$('fieldset.rango').addClass('x'+new_class);
+$('fieldset.multiple').addClass('x'+new_class);
+$('fieldset.multiplex').addClass('x'+new_class);
+
+$('fieldset.abierta').addClass('abierta'+new_class);
+$('fieldset.rango').addClass('rango'+new_class);
+$('fieldset.multiple').addClass('multiple'+new_class);
+$('fieldset.multiplex').addClass('multiplex'+new_class);
+
+$('fieldset.abierta'+new_class).removeClass('abierta');
+$('fieldset.rango'+new_class).removeClass('rango');
+$('fieldset.multiple'+new_class).removeClass('multiple');
+$('fieldset.multiplex'+new_class).removeClass('multiplex');
+
+
+$('.modelre').addClass('modelre'+new_class);
+$('.modelre').removeClass('modelre');
+
+$('option.abierta').attr('target','abierta'+new_class);
+$('option.rango').attr('target','rango'+new_class);
+$('option.multiple').attr('target','multiple'+new_class);
+$('option.multiplex').attr('target','multiplex'+new_class);
+
+$('option.abierta').attr('tart',new_class);
+$('option.rango').attr('tart', new_class);
+$('option.multiple').attr('tart',new_class);
+$('option.multiplex').attr('tart',new_class);
+
+$('option.abierta').removeClass('abierta');
+$('option.rango').removeClass('rango');
+$('option.multiple').removeClass('multiple');
+$('option.multiplex').removeClass('multiplex');
+
+$( "li.item-a" ).parent();
+$('select').change(function(){
+var t = $(this).find("option:selected").attr('target');
+var tx = $(this).find("option:selected").attr('tart');
+$('.x'+tx).hide();
+$('.'+t).show();
+});
+});
+</script>

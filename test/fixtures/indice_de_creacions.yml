@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  idx: MyString
+  web: false
+  pass_mobile: MyString
+  lat: MyString
+  long: MyString
+  cuestionario_id: 1
+
+two:
+  idx: MyString
+  web: false
+  pass_mobile: MyString
+  lat: MyString
+  long: MyString
+  cuestionario_id: 1

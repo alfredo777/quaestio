@@ -1,0 +1,86 @@
+
+{{#each pregunta}}
+<h2>Pregunta: {{titulo}}</h2>
+<h3>Tipo {{#typ tipo}}{{/typ}}</h3>
+<table class="table">
+  <thead >
+    <tr>
+      <th>Respuesta</th>
+      <th>Veces Seleccionada</th>
+      <th>%</th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each estadisticas_de_respuesta}}
+      <tr>
+        <td>{{respuesta}}</td><td>{{veces_seleccionada}}</td><td>{{porciento}}</td>
+      </tr>
+      {{/each}}
+  </tbody>
+</table>
+
+
+  <h5>Selección </h5>
+  <div id="pie-{{id}}" style="width: 100%;"></div>
+  <script type="text/javascript">
+    $(function () {
+
+      var dataExec = []
+      {{#each estadisticas_de_respuesta}}
+        dataExec.push({ name: "Respuesta: {{respuesta}}", y: parseInt("{{veces_seleccionada}}")});
+      {{/each}}
+      var dataExec = JSON.stringify(dataExec);
+      console.log(dataExec);
+      $('#pie-{{id}}').data('series',dataExec );
+      // Make monochrome colors and set them as default for all pies
+    Highcharts.getOptions().plotOptions.pie.colors = (function () {
+        var colors = [],
+            base = Highcharts.getOptions().colors[0],
+            i;
+
+        for (i = 0; i < 10; i += 1) {
+            // Start out with a darkened base color (negative brighten), and end
+            // up with a much brighter color
+            colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+        }
+        return colors;
+    }());
+    setTimeout(function(){
+
+
+    // Build the chart
+    $('#pie-{{id}}').highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: '{{titulo}}'
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Respuestas',
+            data: JSON.parse($('#pie-{{id}}').data('series'))
+        }]
+    });
+    },1000);
+});
+  </script>
+{{/each}}

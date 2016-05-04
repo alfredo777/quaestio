@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  creado_por_id: 1
+  titulo: MyString
+  instrucciones: MyText
+
+two:
+  creado_por_id: 1
+  titulo: MyString
+  instrucciones: MyText

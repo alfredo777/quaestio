@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  titulo: MyString
+  pregunta_id: 1
+  valor: MyString
+  checkflag: false
+
+two:
+  titulo: MyString
+  pregunta_id: 1
+  valor: MyString
+  checkflag: false

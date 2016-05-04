@@ -1,0 +1,22 @@
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+
+{{#each pregunta}}
+<h2>Pregunta: {{titulo}}</h2>
+<h3>Tipo {{#typ tipo}}{{/typ}}</h3>
+<table class="table">
+  <thead >
+    <tr>
+      <th>Respuesta</th>
+      <th>Veces Seleccionada</th>
+      <th>%</th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each estadisticas_de_respuesta}}
+      <tr>
+        <td>{{respuesta}}</td><td>{{veces_seleccionada}}</td><td>{{porciento}}</td>
+      </tr>
+      {{/each}}
+  </tbody>
+</table>
+{{/each}}

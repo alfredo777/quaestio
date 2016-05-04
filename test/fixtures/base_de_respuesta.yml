@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  respuesta_type: MyString
+  respuesta_id: 1
+  cuestionario_id: 1
+  indice_de_creacion: 1
+
+two:
+  respuesta_type: MyString
+  respuesta_id: 1
+  cuestionario_id: 1
+  indice_de_creacion: 1
