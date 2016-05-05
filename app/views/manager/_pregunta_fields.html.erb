@@ -26,12 +26,14 @@
           </fieldset>
           <fieldset class="rango tiporespuesta" style="display:none;">
             De <%= f.select :de_a, (1..100)%> a <%= f.select :de_b, (1..100)%><br/>
+            <!--
             <label>Agregar Emogi <%= f.check_box :emogi %> </label>
             <%= f.select(:coleccion_emogi) do %>
               <% type_emogi.each do |c|-%>
                 <%= content_tag(:option, c.first, value: c.last) %>
               <%end%>
             <%end%>
+            -->
           </fieldset>
           <fieldset id="respuestas" class="multiple tiporespuesta">
             <%= f.fields_for :respuestas  do |fd| %>
