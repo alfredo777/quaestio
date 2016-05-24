@@ -1,3 +1,7 @@
+<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Compartir</button>
+
+
+
 <h1>{{cuestionario.titulo}}</h1>
 <h4>{{cuestionario.instrucciones}}</h4>
 <form action="/manager/responder" method="POST">
@@ -17,17 +21,13 @@
   {{/scalasuper}}
   {{/equal}}
   {{#equal tipo 'es'}}
-
-    {{#equal emogi false}}
-      {{#scala de_a de_b id }}{{/scala}}
-    {{/equal}}
-
-    {{#equal emogi true}}
-      {{#scalaemogi  de_a de_b id coleccion_emogi }} {{/scalaemogi}}
-    {{/equal}}
-
+  {{#equal emogi false}}
+  {{#scala de_a de_b id }}{{/scala}}
   {{/equal}}
-
+  {{#equal emogi true}}
+  {{#scalaemogi  de_a de_b id coleccion_emogi }} {{/scalaemogi}}
+  {{/equal}}
+  {{/equal}}
   {{#equal tipo 'ab'}}
   <div class="form-group">
     <input name="tipo[pregunta][{{id}}][valor]" class="form-control" type="text" placeholder="Pregunta Abierta" id="pregunta_{{id}}"></input>
@@ -41,8 +41,35 @@
 $(document).ready(function(){
 $(".zooming").elevateZoom({zoomWindowPosition: 1});
 $('.to-emogi').click(function(){
-  $('.to-emogi').removeClass('emogi');
-  $(this).addClass('emogi');
+$('.to-emogi').removeClass('emogi');
+$(this).addClass('emogi');
 });
 });
+</script>
+<div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+        <h4 class="modal-title">Da click en los Iconos y Compartelo</h4>
+
+      </div>
+      <center>
+      <h4><a href="{{#host}}{{/host}}/opl/{{cuestionario.id}}">http://localhost:3000/opl/{{cuestionario.id}}</a></h4></center>
+      <div class="modal-footer">
+        <div id="share"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(document).ready(function(){
+    $("#share").jsSocials({
+        text: "AGORA Forms | {{cuestionario.titulo}} ",
+        showLabel: false,
+        showCount: "inside",
+        shares: ["twitter", "facebook", "googleplus"]
+    });
+  });
 </script>
