@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160504000554) do
+ActiveRecord::Schema.define(version: 20160524180820) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
@@ -29,9 +29,11 @@ ActiveRecord::Schema.define(version: 20160504000554) do
     t.integer  "creado_por_id"
     t.string   "titulo"
     t.text     "instrucciones"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.integer  "user_id"
+    t.boolean  "compartir",     default: true
+    t.boolean  "paginar"
   end
 
   create_table "indice_de_creacions", force: :cascade do |t|

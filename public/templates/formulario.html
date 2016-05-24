@@ -9,7 +9,7 @@
   {{#each preguntas}}
   <h4>{{titulo}}</h4><br/>
   {{#each imagen}}
-  <img src="{{small.url}}" data-zoom-image="{{full.url}}" class="zooming"/>
+  <img src="{{#host}}{{/host}}{{small.url}}" data-zoom-image="{{#host}}{{/host}}{{full.url}}" class="zooming"/>
   {{/each}}
   {{descripccion}}<br/>
   {{#equal tipo 'mt'}}
