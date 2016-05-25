@@ -243,13 +243,10 @@ Handlebars.registerHelper("host", function(options){
 
 Handlebars.registerHelper("diferent", function(valA,valB,options){
   var out;
-  console.log(valA);
-  console.log(valB);
   if(valA != valB){
     out = options.fn(this);
   }else{
     out = options.inverse(this);
   }
-
   return out;
 });

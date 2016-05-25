@@ -15,7 +15,24 @@ function pagNext(){
   $('#envio').show();
   $('#finish').show();
  }
+ var lengthcV = $('#pbar').width();
+ var lengthcVX = $('.progress').width();
+ var cpL = $('.pagina').length; 
+ var totale = lengthcVX / cpL;
+ var intporceto =  parseInt((lengthcV/lengthcVX)* 100);
+  if(intporceto == 2){
+    $('#pbar').width(totale);
+    porceT =  parseInt((totale/lengthcVX)* 100);
+    $('#pbar').html(porceT+'%');
+  }else{
+    totale = lengthcV + totale;
+    $('#pbar').width(totale);
+    porceT =  parseInt((totale/lengthcVX)* 100);
+    $('#pbar').html(porceT+'%');
+  }
+
+  
+
  $('#'+siguID).show();
  $('#siguiente').data('actual', sigu.attr('id'));
-
 }
