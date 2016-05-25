@@ -231,3 +231,22 @@ Handlebars.registerHelper('typ', function(tipo, options) {
   }
   return out;
 });
+Handlebars.registerHelper("host", function(options){
+  var out;
+
+  out = window.location.protocol + '//'+ window.location.host;
+
+  return out;
+
+
+});
+
+Handlebars.registerHelper("diferent", function(valA,valB,options){
+  var out;
+  if(valA != valB){
+    out = options.fn(this);
+  }else{
+    out = options.inverse(this);
+  }
+  return out;
+});

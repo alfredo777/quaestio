@@ -1,6 +1,6 @@
 class ManagerController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:view, :responder]
-  before_action :authenticate_user!
+  before_action :authenticate_user!, :only => [:all, :view, :new, :create, :edit, :update, :todas_las_respuestas_del_form, :delete, :xml_view_cuestionario, :estadisticas, :pregunta_view, :todas_las_respuestas_n]
 
   def all
     @cuestionarios = current_user.cuestionarios.paginate(:page => params[:page], :per_page => 5).order('id DESC')
@@ -187,7 +187,7 @@ class ManagerController < ApplicationController
       @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: ra[1][:valor], indice_de_creacion: @inx)
     end
     end
-    redirect_to :back
+    redirect_to gracias_path(id: cuestionario)
   end
 
   def estadisticas
@@ -399,6 +399,6 @@ class ManagerController < ApplicationController
 
 
   def cuestionario_params
-    params.require(:cuestionario).permit(:titulo, :instrucciones, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag]])
+    params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag]])
   end
 end

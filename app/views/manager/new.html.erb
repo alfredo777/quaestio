@@ -4,6 +4,8 @@
   <div class="form-group panel" style="background: #efefef; padding: 5%;">
     <%= f.text_field :titulo, placeholder: "Título", class: "form-control"%><br/>
     <%= f.text_area :instrucciones, placeholder: "Instrucciones",  class: "form-control"%><br/>
+    <%= f.check_box :paginar %> <%= label_tag :paginar %> | 
+    <%= f.check_box :compartir %> <%= label_tag :compartir %>
   </div>
   <fieldset id="preguntas">
     <br/>

@@ -1,4 +1,6 @@
 Rails.application.routes.draw do  
+  
+
   root 'manager#all'
   get 'manager/all', as: :cuestionarios
   get 'manager/view', as: :ver_formulario
@@ -18,4 +20,9 @@ Rails.application.routes.draw do
   get "manager/estadisticas", as: :estadisticas
   get "manager/pregunta_view", as: :pregunta_view
   devise_for :users
+  get 'api/vista_para_respuesta'
+  get 'api/vista_gracias_respuesta'
+  get 'gracias', to: "api#vista_gracias_respuesta", as: :gracias
+  get 'opl/:id', to: "api#vista_para_respuesta", as: :opl
+
 end
