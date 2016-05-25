@@ -29,11 +29,11 @@ ActiveRecord::Schema.define(version: 20160524180820) do
     t.integer  "creado_por_id"
     t.string   "titulo"
     t.text     "instrucciones"
-    t.datetime "created_at",                   null: false
-    t.datetime "updated_at",                   null: false
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
     t.integer  "user_id"
     t.boolean  "compartir",     default: true
-    t.boolean  "paginar"
+    t.boolean  "paginar",       default: false
   end
 
   create_table "indice_de_creacions", force: :cascade do |t|

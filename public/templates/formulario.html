@@ -1,17 +1,25 @@
+{{#equal cuestionario.compartir true}}
 <button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bs-example-modal-lg">Compartir</button>
-
-
-
+{{/equal}}
+<div class="insturcciones">
 <h1>{{cuestionario.titulo}}</h1>
-<h4>{{cuestionario.instrucciones}}</h4>
+<h4 style="text-align: justify;">{{cuestionario.instrucciones}}</h4>
+{{#equal cuestionario.paginar true}}
+<center><div class="btn btn-primary" onclick="opPaginateForm();">Iniciar Cuestionario</div></center>
+</div>
+<div class="paginar" style="display: none;">
+{{/equal}}
 <form action="/manager/responder" method="POST">
   <input name="cuestionario[id]" type="number" value="{{cuestionario.id}}" style="display:none;"></input>
   {{#each preguntas}}
+  <div class="pagina" id="{{id}}">
   <h4>{{titulo}}</h4><br/>
   {{#each imagen}}
-  <img src="{{#host}}{{/host}}{{small.url}}" data-zoom-image="{{#host}}{{/host}}{{full.url}}" class="zooming"/>
+  {{#diferent url null}}
+  <img src="{{#host}}{{/host}}{{small.url}}" data-zoom-image="{{#host}}{{/host}}{{full.url}}" class="zooming"/><br/><br/>
+  {{/diferent }}
   {{/each}}
-  {{descripccion}}<br/>
+  {{descripccion}}<br/><br/>
   {{#equal tipo 'mt'}}
   {{#multiplesuper respuestas}}
   {{/multiplesuper}}
@@ -34,25 +42,32 @@
   </div>
   {{/equal}}
   <br/>
+  </div>
   {{/each}}
-  <input type="submit" value="Responder" class="btn btn-default pull-right"></input>
+  <center>
+   <div id="finish" style="display:none;"><h4>Hola has finalizado el cuestionario da click en enviar para que finalice el proceso. </h4></div>
+   </center>
+   <input type="submit" value="Enviar" class="btn btn-default pull-right" id="envio"></input>
 </form>
+{{#equal cuestionario.paginar true}}
+<div class="btn btn-default" onclick="pagNext()" id="siguiente">Avanzar</div>
+</div>
 <script type="text/javascript">
-$(document).ready(function(){
-$(".zooming").elevateZoom({zoomWindowPosition: 1});
-$('.to-emogi').click(function(){
-$('.to-emogi').removeClass('emogi');
-$(this).addClass('emogi');
-});
-});
+   $('document').ready(function(){
+    $('#envio').hide();
+    $('.pagina').hide();
+    var thisPage = $('.pagina').first();
+    $('#siguiente').data('actual', thisPage.attr('id'));
+    thisPage.show();
+   });
 </script>
+{{/equal}}
 <div class="modal fade bs-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel">
   <div class="modal-dialog modal-lg">
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
         <h4 class="modal-title">Da click en los Iconos y Compartelo</h4>
-
       </div>
       <center>
       <h4><a href="{{#host}}{{/host}}/opl/{{cuestionario.id}}">{{#host}}{{/host}}/opl/{{cuestionario.id}}</a></h4></center>
@@ -62,14 +77,19 @@ $(this).addClass('emogi');
     </div>
   </div>
 </div>
-
 <script>
-  $(document).ready(function(){
-    $("#share").jsSocials({
-        text: "AGORA Forms | {{cuestionario.titulo}} ",
-        showLabel: false,
-        showCount: "inside",
-        shares: ["twitter", "facebook", "googleplus"]
-    });
+$(document).ready(function(){
+  $("#share").jsSocials({
+  text: "AGORA Forms | {{cuestionario.titulo}} ",
+  showLabel: false,
+  showCount: "inside",
+  shares: ["twitter", "facebook", "googleplus"]
   });
+
+  $(".zooming").elevateZoom({zoomWindowPosition: 1});
+  $('.to-emogi').click(function(){
+  $('.to-emogi').removeClass('emogi');
+  $(this).addClass('emogi');
+  });
+});
 </script>
