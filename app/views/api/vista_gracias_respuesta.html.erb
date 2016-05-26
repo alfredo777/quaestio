@@ -1,1 +1,25 @@
-<center><h1>Gracias por responder el formulario <%= @cuestionario.titulo %></h1></center>
+
+<center>
+<%= image_tag('agora-log.png')%>
+<h1>Gracias por responder el formulario <%= @cuestionario.titulo %></h1>
+<h4><%= link_to "Regresar al cuestionario", opl_path(id: @cuestionario.id)%></h4>
+<h4><%= link_to "Ver mas cuestionarios", opl_path(id: @cuestionario.id)%></h4>
+<% if @cuestionario.compartir %>
+<br/>
+<h5>Comparte con tus amigos</h5>
+<div id="share"></div>
+<%end%>
+</center>
+
+<script type="text/javascript">
+  $(document).ready(function(){
+    $("#share").jsSocials({
+    url: "http://agora.rockstars.mx/opl/<%=@cuestionario.id%>",
+    text: "AGORA Forms | <%= @cuestionario.titulo  %> ",
+    shareIn: "popup",
+    showLabel: false,
+    showCount: "inside",
+    shares: ["facebook","twitter","linkedin","whatsapp","googleplus"]
+    });
+  });
+</script>
