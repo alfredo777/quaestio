@@ -13,7 +13,7 @@
         <% if current_user.image %>
         <li><a href="/"><%= image_tag(current_user.image, width: "35px")%> <%= current_user.name %></a></li>
         <%else%>
-        <li><a href="/"><%= image_tag('/assets/favicon.png', width: "35px")%> <%= current_user.name %></a></li>
+        <li><a href="/"><%= image_tag('favicon.png', width: "35px")%> <%= current_user.name %></a></li>
         <%end%>
       </ul>
       <%else%>
