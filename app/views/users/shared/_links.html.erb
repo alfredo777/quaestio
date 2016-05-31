@@ -1,13 +1,42 @@
+<%- if devise_mapping.omniauthable? %>
+  <%- resource_class.omniauth_providers.each do |provider| %>
+    <%= link_to  omniauth_authorize_path(resource_name, provider) do %> 
+    <% if "#{OmniAuth::Utils.camelize(provider)}" == "Facebook" %>
+    <div class="btn btn-primary btn-large" style="width:100%; font-size:18px;  margin-bottom:10px;">
+         <center><i class="fa fa-facebook" aria-hidden="true"></i>acebook Loggin</center>
+    </div>
+    <br/>
+    <%end%>
+    <%end%>
+  <% end -%>
+<% end -%>
+
+
 <%- if controller_name != 'sessions' %>
-  <%= link_to "Ingresa", new_session_path(resource_name) %><br />
+  <%= link_to  new_session_path(resource_name) do %>
+
+   <div class="btn btn-default btn-large" style="width:100%; font-size:18px;  margin-bottom:10px;">
+   Ingresa
+    </div>
+    <%end%>
+  <br />
 <% end -%>
 
 <%- if devise_mapping.registerable? && controller_name != 'registrations' %>
-  <%= link_to "Registro", new_registration_path(resource_name) %><br />
+  <%= link_to  new_registration_path(resource_name) do %>
+  <div class="btn btn-default btn-large" style="width:100%; font-size:18px;  margin-bottom:10px;">
+  Registro
+  </div>
+  <%end%><br />
 <% end -%>
 
 <%- if devise_mapping.recoverable? && controller_name != 'passwords' && controller_name != 'registrations' %>
-  <%= link_to "Recuperar contraseña", new_password_path(resource_name) %><br />
+  <%= link_to new_password_path(resource_name) do %>
+   <div class="btn btn-default btn-large" style="width:100%; font-size:18px;  margin-bottom:10px;">
+   Recuperar contraseña
+    </div>
+  <%end%>
+  <br />
 <% end -%>
 
 <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
@@ -18,8 +47,3 @@
   <%= link_to "No he recivido las instrucciones de desbloqueo", new_unlock_path(resource_name) %><br />
 <% end -%>
 
-<%- if devise_mapping.omniauthable? %>
-  <%- resource_class.omniauth_providers.each do |provider| %>
-    <%= link_to "Ingresar con #{OmniAuth::Utils.camelize(provider)}", omniauth_authorize_path(resource_name, provider) %><br />
-  <% end -%>
-<% end -%>
