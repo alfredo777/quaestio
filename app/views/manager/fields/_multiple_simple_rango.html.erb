@@ -1,0 +1,32 @@
+<div class="nested-fields col-md-12">
+  <div class="row panel panel-survey ">
+  <div class="col-md-12" style="margin-top: -35px;">
+    <br/>
+    <div style="margin-right: -16px;">
+    <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <div class="col-md-12"> 
+        <div class="col-md-12">
+          <%= f.hidden_field :tipo, value: "sl" %>
+          <h4>Escribe las pregunta</h4>
+          <%= f.text_field :titulo, placeholder: "Pregunta", class: "form-control"%><br/>
+          <%= f.file_field :imagen %>
+          <br/><br/>
+        </div>
+        <div class="col-md-12 modelre">
+           <h4>Zona de respuesta</h4>
+          <%= f.text_area :descripccion, placeholder: "Descripcción Pregunta", class: "form-control"%><br/>
+          <fieldset id="respuestasx" class="multiplex tiporespuesta" style="padding: 20px;">
+            <%= f.fields_for :respuestas  do |fd| %>
+            <%= render partial: "/manager/respuesta_valor_fields", locals: {f: fd}%>
+            <%end%>
+            <%= link_to_add_association 'Agregar Respuesta con valor', f, :respuestas, force_non_association_create: false,  partial: '/manager/respuesta_valor_fields', class:"btn btn-default pull-right" %>
+             <br/>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

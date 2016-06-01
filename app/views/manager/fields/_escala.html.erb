@@ -1,0 +1,37 @@
+<div class="nested-fields col-md-12">
+  <div class="row panel panel-survey">
+  <div class="col-md-12" style="margin-top: -35px;">
+    <br/>
+    <div style="margin-right: -16px;">
+    <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <div class="col-md-12">
+        <div class="col-md-12">
+          <%= f.hidden_field :tipo, value: "es" %>
+          <h4>Escribe las pregunta</h4>
+          <%= f.text_field :titulo, placeholder: "Pregunta", class: "form-control"%><br/>
+          <%= f.file_field :imagen %>
+          <br/><br/>
+        </div>
+        <div class="col-md-12 modelre">
+           <h4>Zona de respuesta</h4>
+          <%= f.text_area :descripccion, placeholder: "Descripcción de la pregunta", class: "form-control"%>
+          <fieldset class="rango tiporespuesta" style="padding:20px;">
+            <h5>De</h5> <%= f.select :de_a, (1..100)%> <h5>a</h5> <%= f.select :de_b, (1..100), selected: 10%><br/>
+            <label>Agregar Emogi <%= f.check_box :emogi %> </label>
+            <%= f.select(:coleccion_emogi) do %>
+              <% type_emogi.each do |c|-%>
+                <%= content_tag(:option, c.first, value: c.last) %>
+              <%end%>
+            <%end%>
+          </fieldset>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  $('select').addClass("form-control");
+</script>

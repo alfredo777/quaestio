@@ -1,0 +1,29 @@
+<div class="nested-fields col-md-12">
+  <div class="row panel panel-survey">
+    <div class="col-md-12" style="margin-top: -35px;">
+      <br/>
+      <div style="margin-right: -16px;">
+      <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
+    </div>
+    <br/>
+    <div class="form-group">
+      <div class="col-md-12">
+        <%= f.hidden_field :tipo, value: "ab" %>
+        <div class="col-md-5">
+          <h4>Escribe las pregunta</h4>
+          <%= f.text_field :titulo, placeholder: "Pregunta", class: "form-control"%><br/>
+          <%= f.file_field :imagen %>
+          <br/><br/>
+        </div>
+        <div class="col-md-5 modelre">
+          <h4>Zona de respuesta</h4>
+          <fieldset class="abierta tiporespuesta">
+            <%= f.text_area :descripccion, placeholder: "Descripcción Abierta", class: "form-control"%>
+          </fieldset>
+        </div>
+        <div class="col-md-2">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

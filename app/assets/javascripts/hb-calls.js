@@ -215,6 +215,17 @@ Handlebars.registerHelper('multiplesuper', function(items,options) {
   return out + "</table>";
 });
 
+Handlebars.registerHelper('multiplesupermtca', function(items,options) {
+  var out = "<table class='table table-striped'>";
+  for(var i=0, l=items.length; i<l; i++) {
+    
+      out = out + "<tr><td>"+ items[i].titulo+'</td><td><input name="tipo[respuesta]['+items[i].id+'][valor]"  type="text" class="pull-right form-control" ></input></td></tr>';
+    
+  }
+
+  return out + "</table>";
+});
+
 Handlebars.registerHelper('typ', function(tipo, options) {
   var out;
   if (tipo == "sl"){

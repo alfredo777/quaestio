@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531023052) do
+ActiveRecord::Schema.define(version: 20160531181505) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
@@ -64,6 +64,7 @@ ActiveRecord::Schema.define(version: 20160531023052) do
     t.integer  "de_b"
     t.boolean  "emogi",           default: false
     t.string   "coleccion_emogi"
+    t.integer  "pase"
   end
 
   create_table "respuesta", force: :cascade do |t|
