@@ -226,6 +226,24 @@ Handlebars.registerHelper('multiplesupermtca', function(items,options) {
   return out + "</table>";
 });
 
+
+Handlebars.registerHelper('valuescontrapose', function(items, id,options) {
+  var out = "<table class='table table-striped'>";
+   console.log(items);
+    
+  for(var i=0, l=items.length; i<l; i++) {
+    if (i == 0) {
+      out = out + "<tr><td>"+ items[i].nombre_del_valor+'</td><td><input name="tipo[respuesta]['+id+'][valor]"  value="'+items[i].cuantificador_del_valor+'"  type="radio" class="pull-right" checked></input></td></tr>';
+    }else{
+      out = out + "<tr><td>"+ items[i].nombre_del_valor+'</td><td><input name="tipo[respuesta]['+id+'][valor]"  value="'+items[i].cuantificador_del_valor+'"  type="radio" class="pull-right" ></input></td></tr>';
+
+    }
+  }
+
+  return out + "</table>";
+});
+
+
 Handlebars.registerHelper('typ', function(tipo, options) {
   var out;
   if (tipo == "sl"){
@@ -239,6 +257,9 @@ Handlebars.registerHelper('typ', function(tipo, options) {
   }
   if (tipo == "mt"){
     out = "Selección Multiple";
+  }
+  if (tipo == "mtca"){
+    out = "Selección Multiple campo Abierto";
   }
   return out;
 });

@@ -47,6 +47,13 @@
       {{#multiplesupermtca respuestas}}
       {{/multiplesupermtca}}
       {{/equal}}
+      {{#equal tipo 'mtcaval'}}
+      {{#each respuestas}}
+        <h4>{{titulo}}</h4>
+        {{#valuescontrapose valores id}}
+        {{/valuescontrapose}}
+      {{/each}}
+      {{/equal}}
       {{#equal tipo 'sl'}}
       {{#scalasuper respuestas id}}
       {{/scalasuper}}

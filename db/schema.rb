@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160531181505) do
+ActiveRecord::Schema.define(version: 20160612160957) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
@@ -72,8 +72,10 @@ ActiveRecord::Schema.define(version: 20160531181505) do
     t.integer  "pregunta_id"
     t.string   "valor"
     t.boolean  "checkflag"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
+    t.decimal  "respuesta",   default: 0.0
+    t.decimal  "pase",        default: 0.0
   end
 
   create_table "token_de_descargas", force: :cascade do |t|
@@ -108,5 +110,13 @@ ActiveRecord::Schema.define(version: 20160531181505) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+
+  create_table "volores_multiples_to_respuesta", force: :cascade do |t|
+    t.integer  "respuesta_id"
+    t.string   "nombre_del_valor"
+    t.integer  "cuantificador_del_valor"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+  end
 
 end
