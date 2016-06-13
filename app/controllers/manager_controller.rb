@@ -273,6 +273,61 @@ class ManagerController < ApplicationController
 
           })
         end
+      when "mtcaval"
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+             end
+           end
+          end
+        end
+        
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+        stata.each do |s|
+          pregunta.respuestas.each do |r2|
+            r2.volores_multiples_to_respuesta.each do |vmr|
+              if s[0].to_i == vmr.cuantificador_del_valor
+              stata_glose.push({
+                id: r2.id,
+                respuesta: "#{vmr.nombre_del_valor} | #{vmr.cuantificador_del_valor}",
+                veces_seleccionada: s[1],
+                porciento: ((s[1].to_f/resobase.size)*100).round(2)
+              })
+              end
+            end
+          end
+        end
+      when "mtca"
+        valores_internos = []
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push([ers.contestacion_id, ers.valor])
+             end
+           end
+          end
+        end
+
+        stata = Hash.new(0)
+        stata_glose = []
+
+        resobase.map { |x| stata[x] += 1 }
+        stata.each do |c|
+         rsp = Respuesta.find(c[0][0])
+         stata_glose.push({
+          id: rsp.id,
+          respuesta: rsp.titulo,
+          veces_seleccionada: c[1],
+          porciento: (c[0][1].to_f).round(2)
+
+          })
+        end
       when "ab"
        pregunta.base_de_respuestas.each_with_index  do |r, index|
         resobase.push(
