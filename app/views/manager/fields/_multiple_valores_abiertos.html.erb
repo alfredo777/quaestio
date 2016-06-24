@@ -1,9 +1,10 @@
-<div class="nested-fields col-md-12">
+<div class="nested-fields col-md-12 preguntaz">
+<div class="number"></div>
   <div class="row panel panel-survey">
     <div class="col-md-12" style="margin-top: -35px;">
       <br/>
       <div style="margin-right: -16px;">
-      <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
+      <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right remove',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
     </div>
     <br/>
     <div class="form-group">
@@ -31,3 +32,8 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+  IndexIntroForm();
+  RemoveItem();
+
+</script>

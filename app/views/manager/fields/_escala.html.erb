@@ -1,9 +1,10 @@
-<div class="nested-fields col-md-12">
+<div class="nested-fields col-md-12 preguntaz">
+  <div class="number"></div>
   <div class="row panel panel-survey">
-  <div class="col-md-12" style="margin-top: -35px;">
-    <br/>
-    <div style="margin-right: -16px;">
-    <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
+    <div class="col-md-12" style="margin-top: -35px;">
+      <br/>
+      <div style="margin-right: -16px;">
+      <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right remove',  data: {confirm: '¿Estas seguro de eliminar la pregunta?'}) %></div>
     </div>
     <br/>
     <div class="form-group">
@@ -16,16 +17,21 @@
           <br/><br/>
         </div>
         <div class="col-md-12 modelre">
-           <h4>Zona de respuesta</h4>
+          <h4>Zona de respuesta</h4>
           <%= f.text_area :descripccion, placeholder: "Descripcción de la pregunta", class: "form-control"%>
           <fieldset class="rango tiporespuesta" style="padding:20px;">
             <h5>De</h5> <%= f.select :de_a, (1..100)%> <h5>a</h5> <%= f.select :de_b, (1..100), selected: 10%><br/>
             <label>Agregar Emogi <%= f.check_box :emogi %> </label>
             <%= f.select(:coleccion_emogi) do %>
-              <% type_emogi.each do |c|-%>
-                <%= content_tag(:option, c.first, value: c.last) %>
-              <%end%>
+            <% type_emogi.each do |c|-%>
+            <%= content_tag(:option, c.first, value: c.last) %>
             <%end%>
+            <%end%>
+            <fieldset id="pase_dinamico_escala">
+              <div class="col-lg-12">
+              <%= link_to_add_association "Agregar pase dinámico", f ,:pase_dinamicos, partial: '/manager/fields/pase_dinamicos', class:"btn btn-default pull-right"%>
+              </div>
+            </fieldset>
           </fieldset>
         </div>
       </div>
@@ -33,5 +39,8 @@
   </div>
 </div>
 <script type="text/javascript">
-  $('select').addClass("form-control");
+$('select').addClass("form-control");
+IndexIntroForm();
+RemoveItem();
+
 </script>

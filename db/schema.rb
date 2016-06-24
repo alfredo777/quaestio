@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160613032523) do
+ActiveRecord::Schema.define(version: 20160624004556) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
@@ -50,6 +50,15 @@ ActiveRecord::Schema.define(version: 20160613032523) do
 
   add_index "indice_de_creacions", ["idx"], name: "index_indice_de_creacions_on_idx"
   add_index "indice_de_creacions", ["pass_mobile"], name: "index_indice_de_creacions_on_pass_mobile"
+
+  create_table "pase_dinamicos", force: :cascade do |t|
+    t.integer  "de_a"
+    t.integer  "de_b"
+    t.integer  "pase"
+    t.integer  "pregunta_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "pregunta", force: :cascade do |t|
     t.string   "titulo"

@@ -67,3 +67,30 @@ function pagNext(){
  $('#siguiente').data('actual', siguID);
 }
 
+function IndexIntroForm(){
+var exacTTT = $('.preguntaz');
+ $.each(exacTTT, function(index, itemx){
+  var sucIDX = index  + 1;
+  var chilDX = $(itemx).children(".number");
+  $(chilDX).html('<h1>'+sucIDX+'</h1>');
+ });
+}
+
+function RemoveItem(){
+  $('.remove').click(function(){
+    setTimeout(function(){
+      var OOld_alert = window.alert, confirm_alert = this.confirm;
+      console.log(OOld_alert);
+      console.log(confirm_alert);
+      if(confirm_alert){
+        var exacTTT = $('.preguntaz');
+         $.each(exacTTT, function(index, itemx){
+          var sucIDX = index  + 1;
+          var chilDX = $(itemx).children(".number");
+          $(chilDX).html('<h1>'+sucIDX+'</h1>');
+         });
+      }
+    },50);    
+  });
+}
+
