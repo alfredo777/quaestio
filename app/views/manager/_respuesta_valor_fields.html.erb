@@ -1,10 +1,13 @@
 <div class="nested-fields">
   <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-5">
       <%= f.text_field :titulo, placeholder: "Respuesta", class: "form-control"%>
     </div>
     <div class="col-md-3">
       <%= f.text_field :valor, placeholder: "Valor", class: "form-control"%>
+    </div>
+    <div class="col-md-3">
+      <%= f.number_field :pase, placeholder: "Pase", value: 0, class: "form-control"%>
     </div>
     <div class="col-md-1">
       <%=  link_to_remove_association("X", f, :class => 'btn btn-warning pull-right',  data: {confirm: '¿Estas seguro de eliminar la respuesta?'}) %>

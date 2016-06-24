@@ -188,13 +188,13 @@ Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion,
 
 });
 
-Handlebars.registerHelper('scalasuper', function(items, idx,options) {
+Handlebars.registerHelper('scalasuper', function(items, idx,options, page) {
  var out = "<table class='table table-striped'>";
   for(var i=0, l=items.length; i<l; i++) {
     if (i == 0) {
-      out = out + "<tr><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'" class="pull-right" checked></input></td></tr>';
+      out = out + "<tr class='trx'><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'"  data-page="'+items[i].pase+'"  class="pull-right pase" checked></input></td></tr>';
     }else{
-      out = out + "<tr><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'" class="pull-right"></input></td></tr>';
+      out = out + "<tr class='trx'><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'"  data-page="'+items[i].pase+'" class="pull-right pase"></input></td></tr>';
     }
   }
 
