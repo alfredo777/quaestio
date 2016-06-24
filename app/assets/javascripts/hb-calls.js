@@ -143,29 +143,42 @@ Handlebars.registerHelper('equal', function(lvalue, rvalue, options) {
 });
 
 
-Handlebars.registerHelper('scala', function(avalue, bvalue, idx,options) {
+Handlebars.registerHelper('scala', function(avalue, bvalue, idx, pase_dinamicos,options) {
   var out;
   var init = avalue;
   var finish = bvalue;
   var firstn = init;
+  var pase_dinamicos = pase_dinamicos;
   out = "<table class='table table-striped table-bordered'><tr>";
   for(var i=init, l=finish+1; i<l; i++) {
     out = out + "<td><center>"+i+'</center></td>';
   }
-  out = out + "</tr><tr>";
-  for(var i=init, l=finish+1; i<l; i++) {
-    if (i == init) {
-    out = out + '<td><center> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'"  checked></input></td></center>';
-    }else{
-    out = out + '<td><center> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'"  ></input></td></center>';
-    }
+  out = out + "</tr><tr class='trx'>";
 
+  for(var i=init, l=finish+1; i<l; i++) {
+    var pase_array = [];
+    if(pase_dinamicos != null){
+    $.each(pase_dinamicos, function(index,item){
+      if( i >= item.de_a  && i <= item.de_b){
+         pase_array.push(item.pase); 
+      }
+    });
+    }else{
+      pase_array = [0]; 
+    }
+    var PaseTo = pase_array[0];
+    if (i == init) {
+    out = out + '<td style="text-align: center; vertical-align: middle;"><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" data-page="'+PaseTo+'"  class="pase"  checked></input></td>';
+    }else{
+    out = out + '<td style="text-align: center; vertical-align: middle;"><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" data-page="'+PaseTo+'"  class="pase"  ></input></td>';
+    }
   }
+
   return out+ "</tr></table>";
 
 });
 
-Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion,options) {
+Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion, pase_dinamicos,options) {
   var out;
   var init = avalue;
   var finish = bvalue;
@@ -175,12 +188,25 @@ Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion,
   for(var i=init, l=finish+1; i<l; i++) {
     out = out + "<td><center>"+i+'</center></td>';
   }
-  out = out + "</tr><tr>";
+  out = out + "</tr><tr class='trx'>";
+
+
   for(var i=init, l=finish+1; i<l; i++) {
-    if (i == init) {
-    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi emogi"><img src="'+coleccionn[10-i]+'" width="90px"/></label> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" style="display:none;" checked></input></td></center>';
+    var pase_array = [];
+    if(pase_dinamicos != null){
+    $.each(pase_dinamicos, function(index,item){
+      if( i >= item.de_a  && i <= item.de_b){
+         pase_array.push(item.pase); 
+      }
+    });
     }else{
-    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi"><img src="'+coleccionn[10-i]+'" width="90px"/> </label><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'"  style="display:none;" ></input></td></center>';
+      pase_array = [0]; 
+    }
+    var PaseTo = pase_array[0];
+    if (i == init) {
+    out = out + '<td style="text-align: center; vertical-align: middle;"><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi emogi"><img src="'+coleccionn[10-i]+'" width="90px"/></label> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" data-page="'+PaseTo+'"  class="pase" style="display:none;" checked></input></td>';
+    }else{
+    out = out + '<td style="text-align: center; vertical-align: middle;"><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi"><img src="'+coleccionn[10-i]+'" width="90px"/> </label><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" data-page="'+PaseTo+'"  class="pase"  style="display:none;" ></input></td>';
     }
 
   }

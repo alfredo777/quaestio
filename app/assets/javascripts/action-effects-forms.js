@@ -18,10 +18,10 @@ function pagNext(){
  $.each(paseXCV, function(index, item){
   var TdX = $(item).children('td');
    $.each(TdX, function(index, itemx){
+     /*console.log(itemx);*/
      var TDRX = $(itemx).children("input.pase");
-     console.log(TDRX);
-     var check = $(TDRX).prop( "checked" );
-     console.log(check);
+     /*console.log(TDRX);*/
+     var check = $(TDRX).prop("checked");
      if(check == true){
       var paseNMX = $(TDRX).data('page');
       paseNMX = Math.round(paseNMX);

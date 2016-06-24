@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  de_a: 1
+  de_b: 1
+  pase: 1
+
+two:
+  de_a: 1
+  de_b: 1
+  pase: 1

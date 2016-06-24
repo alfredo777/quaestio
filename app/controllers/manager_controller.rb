@@ -128,7 +128,8 @@ class ManagerController < ApplicationController
           de_b: pregunta.de_b,
           emogi: pregunta.emogi,
           coleccion_emogi: pregunta.coleccion_emogi,
-          respuestas: respuestas_accces_function(pregunta.id)
+          respuestas: respuestas_accces_function(pregunta.id),
+          pase_dinamicos: pase_dinamicos_function(pregunta.id)
       })
     end
     
@@ -156,6 +157,21 @@ class ManagerController < ApplicationController
      })
     end
     @r = respuestas
+  end
+
+  def pase_dinamicos_function(id)
+    @pases = PaseDinamico.where(pregunta_id: id);
+    pases_array = []
+    if !@pases.nil?
+      @pases.each do |pase|
+        pases_array.push({
+          de_a: pase.de_a,
+          de_b: pase.de_b,
+          pase: pase.pase
+        })
+      end
+    end
+    @p = pases_array
   end
 
   def xml_view_cuestionario
@@ -535,6 +551,6 @@ class ManagerController < ApplicationController
 
 
   def cuestionario_params
-    params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag, :pase, volores_multiples_to_respuesta_attributes:[:nombre_del_valor, :cuantificador_del_valor]]])
+    params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag, :pase, volores_multiples_to_respuesta_attributes:[:nombre_del_valor, :cuantificador_del_valor]], pase_dinamicos_attributes: [:de_a, :de_b, :pase]])
   end
 end
