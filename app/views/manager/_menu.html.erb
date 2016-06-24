@@ -2,20 +2,21 @@
   <div class="container-fluid">
     <div class="container">
       <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+     
+      <% if current_user %>
+      <ul class="nav navbar-nav col-lg-12 col-md-8 col-md-3">
+        <% if current_user.image %>
+        <li ><a href="/" ><%= image_tag(current_user.image, width: "35px")%> <%= current_user.name %></a></li>
+        <%else%>
+        <li ><a href="/"><%= image_tag('favicon.png', width: "35px")%> <%= current_user.name %></a></li>
+        <%end%>
+      </ul>
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="position:relative; float: right; top: -59px; border-color: #fff; margin-bottom: 0px;">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <% if current_user %>
-      <ul class="nav navbar-nav">
-        <% if current_user.image %>
-        <li class="col-md-3"><a href="/" ><%= image_tag(current_user.image, width: "35px")%> <%= current_user.name %></a></li>
-        <%else%>
-        <li class="col-md-3"><a href="/"><%= image_tag('favicon.png', width: "35px")%> <%= current_user.name %></a></li>
-        <%end%>
-      </ul>
       <%else%>
       <a class="navbar-brand" href="/"><%= image_tag('logo-blanco.png', width: "90")%></a>
       <%end%>
