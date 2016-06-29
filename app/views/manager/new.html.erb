@@ -32,6 +32,9 @@
     <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_valores_abiertos' do %>
       Multiple con múltiples valores
     <%end%>
+    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_con_categorias' do %>
+      Multiple con múltiples categorias
+    <%end%>
     <%= f.submit 'Publicar el cuestionario', class: "btn btn-success pull-right"%>
   </div>
   <%end%>

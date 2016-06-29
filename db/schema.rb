@@ -11,19 +11,28 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160624004556) do
+ActiveRecord::Schema.define(version: 20160627060335) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
     t.integer  "contestacion_id"
-    t.text     "valor",              limit: 10000
+    t.text     "valor",                      limit: 10000
     t.string   "indice_de_creacion"
-    t.datetime "created_at",                       null: false
-    t.datetime "updated_at",                       null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.integer  "categorias_en_preguntum_id"
   end
 
   add_index "base_de_respuesta", ["contestacion_id"], name: "index_base_de_respuesta_on_contestacion_id"
   add_index "base_de_respuesta", ["indice_de_creacion"], name: "index_base_de_respuesta_on_indice_de_creacion"
+
+  create_table "categorias_en_pregunta", force: :cascade do |t|
+    t.integer  "pregunta_id"
+    t.string   "titulo"
+    t.integer  "valor"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
 
   create_table "cuestionarios", force: :cascade do |t|
     t.integer  "creado_por_id"

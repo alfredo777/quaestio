@@ -129,6 +129,7 @@ class ManagerController < ApplicationController
           emogi: pregunta.emogi,
           coleccion_emogi: pregunta.coleccion_emogi,
           respuestas: respuestas_accces_function(pregunta.id),
+          categorias: pregunta.categorias_en_pregunta,
           pase_dinamicos: pase_dinamicos_function(pregunta.id)
       })
     end
@@ -221,7 +222,17 @@ class ManagerController < ApplicationController
     end
     if !rx.nil?
     rx.each do |ra|
+     valorx = ra[1][:valor]
+     if valorx.kind_of?(Array)
+      valorx.each do |vx|
+      arr = eval(vx)
+      valor = arr[0]
+      categoria = arr[1]
+      @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: valor, categorias_en_preguntum_id: categoria, indice_de_creacion: @inx)
+      end
+     else
       @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: ra[1][:valor], indice_de_creacion: @inx)
+     end
     end
     end
     redirect_to gracias_path(id: cuestionario)
@@ -551,6 +562,6 @@ class ManagerController < ApplicationController
 
 
   def cuestionario_params
-    params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag, :pase, volores_multiples_to_respuesta_attributes:[:nombre_del_valor, :cuantificador_del_valor]], pase_dinamicos_attributes: [:de_a, :de_b, :pase]])
+    params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag, :pase, volores_multiples_to_respuesta_attributes:[:nombre_del_valor, :cuantificador_del_valor]], pase_dinamicos_attributes: [:de_a, :de_b, :pase], categorias_en_pregunta_attributes: [:titulo, :valor]])
   end
 end

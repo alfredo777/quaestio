@@ -269,6 +269,27 @@ Handlebars.registerHelper('valuescontrapose', function(items, id,options) {
   return out + "</table>";
 });
 
+Handlebars.registerHelper('advancedcategory', function(items, id, categorias, options){
+  var out = "<table class='table table-striped '>";
+  out = out + "<thead><tr class='active'>";
+  out = out + '<th> Opcciones </th>'
+  $.each(categorias, function(index, item){
+    out = out + '<th>'+ item.titulo + '</th>';
+  });
+  out = out + "</tr><thead>";
+  out = out + "<tbody>";
+  $.each(items, function(index, item){
+    out = out + '<tr>';
+    out = out + '<td class="active">'+item.titulo+'</td>';
+    var superItem = item;
+    $.each(categorias, function(index, itemcat){
+      out = out + '<td><input name="tipo[respuesta]['+id+'][valor][]"  value="['+superItem.id+','+itemcat.id+']"  type="checkbox" class="pull-right" ></input></td>';
+    });
+    out = out + '</tr>';
+  });
+  out = out + "</tbody>";
+  return  out + "</table>";
+});
 
 Handlebars.registerHelper('typ', function(tipo, options) {
   var out;

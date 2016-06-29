@@ -54,6 +54,10 @@
         {{/valuescontrapose}}
       {{/each}}
       {{/equal}}
+      {{#equal tipo 'mtcat'}}
+        {{#advancedcategory respuestas id categorias}}
+        {{/advancedcategory}}
+      {{/equal}}
       {{#equal tipo 'sl'}}
       {{#scalasuper respuestas id}}
       {{/scalasuper}}
