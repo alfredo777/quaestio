@@ -1,50 +1,66 @@
-<h1>Administrador de Formularios</h1>
-<%=link_to nuevo_cuestionario_path, class: "btn btn-info pull-right", :"data-toggle" => "tooltip", :"data-placement"=>"top", :"title"=>"Nuevo Cuestionario" do%>
-<i class="fa fa-file-text-o" aria-hidden="true"></i> <i class="fa fa-plus" aria-hidden="true"></i>
-<%end%>
-<table class="table table-striped">
-  <thead>
-    <tr>
-      <th >Título</th>
-      <th >Instrucciones</th>
-      <th >Opcciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @cuestionarios.each do |cuestionario| %>
-      <% 
-        preguntas = []
-        cuestionario.preguntas.each do |pregunta|
-          preguntas.push({
-              id: pregunta.id,
-              titulo: pregunta.titulo,
-              tipo: pregunta.tipo,
-              descripccion: pregunta.descripccion,
-              cuestionario_id:  pregunta.cuestionario_id,
-              created_at: pregunta.created_at,
-              updated_at: pregunta.updated_at,
-              imagen: pregunta.imagen,
-              valor: pregunta.valor,
-              de_a: pregunta.de_a,
-              de_b: pregunta.de_b,
-              respuestas: [
-                pregunta.respuestas.each do |respuesta|
-                  respuesta.to_json
-                end
-              ]
-          })
-        end
-        @json_data = {cuestionario: cuestionario, preguntas: preguntas}
-        %>
+<div class="row">
+  <h1>Administrador de Formularios</h1>
+  <%=link_to nuevo_cuestionario_path, class: "btn btn-info pull-right", :"data-toggle" => "tooltip", :"data-placement"=>"top", :"title"=>"Nuevo Cuestionario" do%>
+  <i class="fa fa-file-text-o" aria-hidden="true"></i> <i class="fa fa-plus" aria-hidden="true"></i>
+  <%end%>
+  <table class="table table-striped col-md-12">
+    <thead>
+      <tr>
+        <th class="col-md-3">Título</th>
+        <th class="col-md-3">Instrucciones</th>
+        <th class="col-md-6">Opcciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @cuestionarios.each do |cuestionario| %>
+      <%
+      preguntas = []
+      cuestionario.preguntas.each do |pregunta|
+      preguntas.push({
+      id: pregunta.id,
+      titulo: pregunta.titulo,
+      tipo: pregunta.tipo,
+      descripccion: pregunta.descripccion,
+      cuestionario_id:  pregunta.cuestionario_id,
+      created_at: pregunta.created_at,
+      updated_at: pregunta.updated_at,
+      imagen: pregunta.imagen,
+      valor: pregunta.valor,
+      de_a: pregunta.de_a,
+      de_b: pregunta.de_b,
+      respuestas: [
+      pregunta.respuestas.each do |respuesta|
+      respuesta.to_json
+      end
+      ]
+      })
+      end
+      @json_data = {cuestionario: cuestionario, preguntas: preguntas}
+      %>
       <tr>
         <td><%= cuestionario.titulo %></td>
         <td><%= cuestionario.instrucciones %></td>
         <td>
-        <div class="pull-right"><%= link_to "CSV", todas_las_respuestas_del_form_path(id: cuestionario.id)%> | <%= link_to 'JSON',json_view_cuestionario_path(id: cuestionario.id), target: '_blank' %> |  <%= link_to 'XML',xml_view_cuestionario_path(id: cuestionario.id), target: '_blank'  %> | <a href='<%="data:text/json;charset=utf-8,#{@json_data.to_json}"%>' download='<%= "#{cuestionario.id}-#{SecureRandom.hex(10)}-data.json" %>'>JSON <i class="fa fa-download" aria-hidden="true"></i></a> | <a href="<%=estadisticas_path(id: cuestionario.id )%>"> Respuestas <i class="fa fa-pie-chart" aria-hidden="true"></i></a> | <%= link_to "Ver formulario", ver_formulario_path(id: cuestionario.id )%> | <%= link_to "Borrar", eliminar_cuesarionario_path(id: cuestionario.id),:confirm=>'¿Deseas eliminar este formulario?'%> </div>
+          <div class=" btn-group pull-right">
+            <div class="btn btn-default"><%= link_to "CSV", todas_las_respuestas_del_form_path(id: cuestionario.id)%>
+            </div>
+            <div class=" btn btn-default">
+              <a href='<%="data:text/json;charset=utf-8,#{@json_data.to_json}"%>' download='<%= "#{cuestionario.id}-#{SecureRandom.hex(10)}-data.json" %>'>JSON <i class="fa fa-download" aria-hidden="true"></i></a>
+            </div>
+            <div class="btn btn-default">
+              <a href="<%=estadisticas_path(id: cuestionario.id )%>"> Respuestas <i class="fa fa-pie-chart" aria-hidden="true"></i></a>
+            </div>
+            <div class="col-md-3 btn btn-default">
+              <%= link_to "Ver formulario", ver_formulario_path(id: cuestionario.id )%>
+            </div>
+            <div class="btn btn-default">
+              <%= link_to "Borrar", eliminar_cuesarionario_path(id: cuestionario.id),:confirm=>'¿Deseas eliminar este formulario?'%>
+            </div>
+          </div>
         </td>
       </tr>
-    <%end%>
-    <%= will_paginate @cuestionarios, renderer: BootstrapPagination::Rails %>
-
-  </tbody>
-</table>
+      <%end%>
+      <%= will_paginate @cuestionarios, renderer: BootstrapPagination::Rails %>
+    </tbody>
+  </table>
+</div>

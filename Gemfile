@@ -24,6 +24,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 gem 'handlebars_assets'
 gem "cocoon"
 gem 'devise'
+gem 'omniauth-facebook'
 gem "font-awesome-rails"
 gem 'bootstrap-select-rails'
 gem 'highcharts-rails', '~> 4.1', '>= 4.1.9'

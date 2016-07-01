@@ -1,0 +1,14 @@
+<div class="nested-fields">
+  <div class="row">
+    <div class="col-md-11">
+      <%= f.text_field :titulo, placeholder: "Respuesta", class: "form-control"%><br/><br/>
+     <fieldset>
+     <%= link_to_add_association 'Agregar Valores a respuestas', f, :volores_multiples_to_respuesta, force_non_association_create: false,class:"btn btn-default pull-right", partial: '/manager/fields/valores' %>
+    </fieldset>
+    </div>
+    <div class="col-md-1">
+      <%=  link_to_remove_association("X", f, :class => 'btn btn-warning pull-right',  data: {confirm: '¿Estas seguro de eliminar la respuesta?'}) %>
+    </div>
+  </div>
+  <br/>
+</div>

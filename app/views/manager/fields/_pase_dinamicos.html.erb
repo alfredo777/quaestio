@@ -1,0 +1,10 @@
+<div class="nested-fields col-md-4" style="margin-top: 20px;">
+  <div style="margin-right: -16px;">
+  <%=  link_to_remove_association("X", f, :class => 'btn btn-default pull-right',  data: {confirm: '¿Estas seguro de eliminar este pase dinámico?'}) %></div>
+  <div class="panel" style="margin-top: 10px; padding: 10px; border: solid 1px #eee;">
+    
+    <h4>Pase dinamico cundo la escala se encuentre entre
+    <%= f.number_field :de_a, placeholder: "n1", class: "form-control"%> y <%= f.number_field :de_b, placeholder: "n++", class: "form-control" %> entonces ir a la página <%= f.number_field :pase, placeholder: "Número de pagina", class: "form-control" %>
+    </h4>
+  </div>
+</div>

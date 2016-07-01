@@ -143,29 +143,42 @@ Handlebars.registerHelper('equal', function(lvalue, rvalue, options) {
 });
 
 
-Handlebars.registerHelper('scala', function(avalue, bvalue, idx,options) {
+Handlebars.registerHelper('scala', function(avalue, bvalue, idx, pase_dinamicos,options) {
   var out;
   var init = avalue;
   var finish = bvalue;
   var firstn = init;
+  var pase_dinamicos = pase_dinamicos;
   out = "<table class='table table-striped table-bordered'><tr>";
   for(var i=init, l=finish+1; i<l; i++) {
     out = out + "<td><center>"+i+'</center></td>';
   }
-  out = out + "</tr><tr>";
-  for(var i=init, l=finish+1; i<l; i++) {
-    if (i == init) {
-    out = out + '<td><center> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'"  checked></input></td></center>';
-    }else{
-    out = out + '<td><center> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'"  ></input></td></center>';
-    }
+  out = out + "</tr><tr class='trx'>";
 
+  for(var i=init, l=finish+1; i<l; i++) {
+    var pase_array = [];
+    if(pase_dinamicos != null){
+    $.each(pase_dinamicos, function(index,item){
+      if( i >= item.de_a  && i <= item.de_b){
+         pase_array.push(item.pase); 
+      }
+    });
+    }else{
+      pase_array = [0]; 
+    }
+    var PaseTo = pase_array[0];
+    if (i == init) {
+    out = out + '<td style="text-align: center; vertical-align: middle;"><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" data-page="'+PaseTo+'"  class="pase"  checked></input></td>';
+    }else{
+    out = out + '<td style="text-align: center; vertical-align: middle;"><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" data-page="'+PaseTo+'"  class="pase"  ></input></td>';
+    }
   }
+
   return out+ "</tr></table>";
 
 });
 
-Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion,options) {
+Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion, pase_dinamicos,options) {
   var out;
   var init = avalue;
   var finish = bvalue;
@@ -175,12 +188,25 @@ Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion,
   for(var i=init, l=finish+1; i<l; i++) {
     out = out + "<td><center>"+i+'</center></td>';
   }
-  out = out + "</tr><tr>";
+  out = out + "</tr><tr class='trx'>";
+
+
   for(var i=init, l=finish+1; i<l; i++) {
-    if (i == init) {
-    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi emogi"><img src="'+coleccionn[10-i]+'" width="90px"/></label> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" style="display:none;" checked></input></td></center>';
+    var pase_array = [];
+    if(pase_dinamicos != null){
+    $.each(pase_dinamicos, function(index,item){
+      if( i >= item.de_a  && i <= item.de_b){
+         pase_array.push(item.pase); 
+      }
+    });
     }else{
-    out = out + '<td><center><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi"><img src="'+coleccionn[10-i]+'" width="90px"/> </label><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'"  style="display:none;" ></input></td></center>';
+      pase_array = [0]; 
+    }
+    var PaseTo = pase_array[0];
+    if (i == init) {
+    out = out + '<td style="text-align: center; vertical-align: middle;"><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi emogi"><img src="'+coleccionn[10-i]+'" width="90px"/></label> <input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" data-page="'+PaseTo+'"  class="pase" style="display:none;" checked></input></td>';
+    }else{
+    out = out + '<td style="text-align: center; vertical-align: middle;"><label for="id_'+idx+'_'+i+'" style="cursor:pointer;" class="to-emogi"><img src="'+coleccionn[10-i]+'" width="90px"/> </label><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+i+'" id="id_'+idx+'_'+i+'" data-page="'+PaseTo+'"  class="pase"  style="display:none;" ></input></td>';
     }
 
   }
@@ -188,13 +214,13 @@ Handlebars.registerHelper('scalaemogi', function(avalue, bvalue, idx, coleccion,
 
 });
 
-Handlebars.registerHelper('scalasuper', function(items, idx,options) {
+Handlebars.registerHelper('scalasuper', function(items, idx,options, page) {
  var out = "<table class='table table-striped'>";
   for(var i=0, l=items.length; i<l; i++) {
     if (i == 0) {
-      out = out + "<tr><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'" class="pull-right" checked></input></td></tr>';
+      out = out + "<tr class='trx'><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'"  data-page="'+items[i].pase+'"  class="pull-right pase" checked></input></td></tr>';
     }else{
-      out = out + "<tr><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'" class="pull-right"></input></td></tr>';
+      out = out + "<tr class='trx'><td>"+ items[i].titulo+'</td><td><input name="tipo[pregunta]['+idx+'][valor]" type="radio" value="'+items[i].id+'"  data-page="'+items[i].pase+'" class="pull-right pase"></input></td></tr>';
     }
   }
 
@@ -215,6 +241,56 @@ Handlebars.registerHelper('multiplesuper', function(items,options) {
   return out + "</table>";
 });
 
+Handlebars.registerHelper('multiplesupermtca', function(items,options) {
+  var out = "<table class='table table-striped'>";
+  for(var i=0, l=items.length; i<l; i++) {
+    
+      out = out + "<tr><td>"+ items[i].titulo+'</td><td><input name="tipo[respuesta]['+items[i].id+'][valor]"  type="text" class="pull-right form-control" ></input></td></tr>';
+    
+  }
+
+  return out + "</table>";
+});
+
+
+Handlebars.registerHelper('valuescontrapose', function(items, id,options) {
+  var out = "<table class='table table-striped'>";
+   console.log(items);
+    
+  for(var i=0, l=items.length; i<l; i++) {
+    if (i == 0) {
+      out = out + "<tr><td>"+ items[i].nombre_del_valor+'</td><td><input name="tipo[respuesta]['+id+'][valor]"  value="'+items[i].cuantificador_del_valor+'"  type="radio" class="pull-right" checked></input></td></tr>';
+    }else{
+      out = out + "<tr><td>"+ items[i].nombre_del_valor+'</td><td><input name="tipo[respuesta]['+id+'][valor]"  value="'+items[i].cuantificador_del_valor+'"  type="radio" class="pull-right" ></input></td></tr>';
+
+    }
+  }
+
+  return out + "</table>";
+});
+
+Handlebars.registerHelper('advancedcategory', function(items, id, categorias, options){
+  var out = "<table class='table table-striped '>";
+  out = out + "<thead><tr class='active'>";
+  out = out + '<th> Opcciones </th>'
+  $.each(categorias, function(index, item){
+    out = out + '<th>'+ item.titulo + '</th>';
+  });
+  out = out + "</tr><thead>";
+  out = out + "<tbody>";
+  $.each(items, function(index, item){
+    out = out + '<tr>';
+    out = out + '<td class="active">'+item.titulo+'</td>';
+    var superItem = item;
+    $.each(categorias, function(index, itemcat){
+      out = out + '<td><input name="tipo[respuesta]['+id+'][valor][]"  value="['+superItem.id+','+itemcat.id+']"  type="checkbox" class="pull-right" ></input></td>';
+    });
+    out = out + '</tr>';
+  });
+  out = out + "</tbody>";
+  return  out + "</table>";
+});
+
 Handlebars.registerHelper('typ', function(tipo, options) {
   var out;
   if (tipo == "sl"){
@@ -228,6 +304,9 @@ Handlebars.registerHelper('typ', function(tipo, options) {
   }
   if (tipo == "mt"){
     out = "Selección Multiple";
+  }
+  if (tipo == "mtca"){
+    out = "Selección Multiple campo Abierto";
   }
   return out;
 });

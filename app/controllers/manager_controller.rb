@@ -128,13 +128,51 @@ class ManagerController < ApplicationController
           de_b: pregunta.de_b,
           emogi: pregunta.emogi,
           coleccion_emogi: pregunta.coleccion_emogi,
-          respuestas: pregunta.respuestas
+          respuestas: respuestas_accces_function(pregunta.id),
+          categorias: pregunta.categorias_en_pregunta,
+          pase_dinamicos: pase_dinamicos_function(pregunta.id)
       })
     end
     
     render json: {cuestionario: cuestionario, preguntas: preguntas}
 
     
+  end
+
+
+  def respuestas_accces_function(id)
+    @respuestas = Respuesta.where(pregunta_id: id);
+
+    respuestas = []
+    
+    @respuestas.each do |r|
+    respuestas.push({
+      id: r.id,
+      titulo: r.titulo,
+      pregunta_id: r.pregunta_id,
+      valor: r.valor,
+      created_at: r.created_at,
+      updated_at: r.updated_at,
+      pase: r.pase,
+      valores: r.volores_multiples_to_respuesta
+     })
+    end
+    @r = respuestas
+  end
+
+  def pase_dinamicos_function(id)
+    @pases = PaseDinamico.where(pregunta_id: id);
+    pases_array = []
+    if !@pases.nil?
+      @pases.each do |pase|
+        pases_array.push({
+          de_a: pase.de_a,
+          de_b: pase.de_b,
+          pase: pase.pase
+        })
+      end
+    end
+    @p = pases_array
   end
 
   def xml_view_cuestionario
@@ -184,7 +222,17 @@ class ManagerController < ApplicationController
     end
     if !rx.nil?
     rx.each do |ra|
+     valorx = ra[1][:valor]
+     if valorx.kind_of?(Array)
+      valorx.each do |vx|
+      arr = eval(vx)
+      valor = arr[0]
+      categoria = arr[1]
+      @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: valor, categorias_en_preguntum_id: categoria, indice_de_creacion: @inx)
+      end
+     else
       @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: ra[1][:valor], indice_de_creacion: @inx)
+     end
     end
     end
     redirect_to gracias_path(id: cuestionario)
@@ -249,6 +297,61 @@ class ManagerController < ApplicationController
           respuesta: rsp.titulo,
           veces_seleccionada: c[1],
           porciento: ((c[1].to_f/resobase.size)*100).round(2)
+
+          })
+        end
+      when "mtcaval"
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+             end
+           end
+          end
+        end
+        
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+        stata.each do |s|
+          pregunta.respuestas.each do |r2|
+            r2.volores_multiples_to_respuesta.each do |vmr|
+              if s[0].to_i == vmr.cuantificador_del_valor
+              stata_glose.push({
+                id: r2.id,
+                respuesta: "#{vmr.nombre_del_valor} | #{vmr.cuantificador_del_valor}",
+                veces_seleccionada: s[1],
+                porciento: ((s[1].to_f/resobase.size)*100).round(2)
+              })
+              end
+            end
+          end
+        end
+      when "mtca"
+        valores_internos = []
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push([ers.contestacion_id, ers.valor])
+             end
+           end
+          end
+        end
+
+        stata = Hash.new(0)
+        stata_glose = []
+
+        resobase.map { |x| stata[x] += 1 }
+        stata.each do |c|
+         rsp = Respuesta.find(c[0][0])
+         stata_glose.push({
+          id: rsp.id,
+          respuesta: rsp.titulo,
+          veces_seleccionada: c[1],
+          porciento: (c[0][1].to_f).round(2)
 
           })
         end
@@ -333,9 +436,65 @@ class ManagerController < ApplicationController
         stata.each do |c|
          rsp = Respuesta.find(c[0])
          stata_glose.push({
+          id: rsp.id,
           respuesta: rsp.titulo,
           veces_seleccionada: c[1],
           porciento: ((c[1].to_f/resobase.size)*100).round(2)
+
+          })
+        end
+      when "mtcaval"
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+             end
+           end
+          end
+        end
+        
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+        stata.each do |s|
+          pregunta.respuestas.each do |r2|
+            r2.volores_multiples_to_respuesta.each do |vmr|
+              if s[0].to_i == vmr.cuantificador_del_valor
+              stata_glose.push({
+                id: r2.id,
+                respuesta: "#{vmr.nombre_del_valor} | #{vmr.cuantificador_del_valor}",
+                veces_seleccionada: s[1],
+                porciento: ((s[1].to_f/resobase.size)*100).round(2)
+              })
+              end
+            end
+          end
+        end
+      when "mtca"
+        valores_internos = []
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push([ers.contestacion_id, ers.valor])
+             end
+           end
+          end
+        end
+
+        stata = Hash.new(0)
+        stata_glose = []
+
+        resobase.map { |x| stata[x] += 1 }
+        stata.each do |c|
+         rsp = Respuesta.find(c[0][0])
+         stata_glose.push({
+          id: rsp.id,
+          respuesta: rsp.titulo,
+          veces_seleccionada: c[1],
+          porciento: (c[0][1].to_f).round(2)
 
           })
         end
@@ -359,6 +518,7 @@ class ManagerController < ApplicationController
         resobase.map { |x| stata[x] += 1 }
         stata.each do |c|
          stata_glose.push({
+          id: "",
           respuesta: c[0],
           veces_seleccionada: c[1],
           porciento: ((c[1].to_f/resobase.size)*100).round(2)
@@ -376,6 +536,7 @@ class ManagerController < ApplicationController
         stata.each do |c|
          rsp = Respuesta.find(c[0])
          stata_glose.push({
+          id: rsp.id,
           respuesta: rsp.titulo,
           veces_seleccionada: c[1],
           porciento: ((c[1].to_f/resobase.size)*100).round(2)
@@ -388,6 +549,8 @@ class ManagerController < ApplicationController
           id: pregunta.id,
           tipo: pregunta.tipo,
           titulo: pregunta.titulo,
+          descripccion: pregunta.descripccion,
+          imagen: pregunta.imagen,
           estadisticas_de_respuesta: stata_glose
         )
     end
@@ -399,6 +562,6 @@ class ManagerController < ApplicationController
 
 
   def cuestionario_params
-    params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag]])
+    params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag, :pase, volores_multiples_to_respuesta_attributes:[:nombre_del_valor, :cuantificador_del_valor]], pase_dinamicos_attributes: [:de_a, :de_b, :pase], categorias_en_pregunta_attributes: [:titulo, :valor]])
   end
 end

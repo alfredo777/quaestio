@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 
 <div class="row">
   <div class="col-md-12">
@@ -13,9 +14,8 @@
       <tbody id="tablex" style="display: none;">
         <% @preguntas.each do |pregunta|%>
         <tr>
-          <td><%= pregunta.titulo %></td>
-          <td><a  onclick='loadTPLAPI("pregunta_view", {id: <%=pregunta.id%>}, "respuesta_avanzado", "stata");
-          '%>Respuestas</a></td>
+          <th>Pregunta</th>
+          <th><a onclick='loadTPLAPI("todas_las_respuestas_n", {id: <%=@cuestionario.id%>}, "respuesta_stata", "stata")' style="cursor:pointer;" data-toggle="tooltip" data-placement="top" title="Carga todas las respuestas"> Respuesta(s)</a> <a class="pull-right" id="opop" data-toggle="tooltip" data-placement="top" title="Filtro(s)" style="cursor:pointer;"><i class="fa fa-filter" aria-hidden="true"></i></a></th>
         </tr>
         <%end%>
       </tbody>
@@ -26,53 +26,70 @@
   </div>
     <div class="col-md-12">
     <div id="stata">
-     <script type="text/javascript">
-       $(document).ready(function(){
+
+        <tbody id="tablex" style="display: none;">
+          <% @preguntas.each do |pregunta|%>
+          <tr>
+            <td><%= pregunta.titulo %></td>
+            <td><a  onclick='loadTPLAPI("pregunta_view", {id: <%=pregunta.id%>}, "respuesta_avanzado", "stata");
+            '%>Respuestas</a></td>
+          </tr>
+          <%end%>
+        </tbody>
+      </table>
+      <div id="advance" data-series=""></div>
+    </div>
+    <div class="col-md-6">
+      <div id="stata">
+        <script type="text/javascript">
+        $(document).ready(function(){
         loadTPLAPI("todas_las_respuestas_n", {id: <%=@cuestionario.id%>}, "respuesta_stata", "stata");
-       });
-     </script>
+        });
+        </script>
+      </div>
     </div>
   </div>
-<script type="text/javascript">
+  <script type="text/javascript">
   $(document).ready(function(){
-    $('#opop').click(function(){
-      $('#tablex').slideToggle();
-    }); 
-     var Niu = <%=@grafica_de_estado%>
-
-
-     var NTransform = [];
-     for(i = 0; i < Niu.length; i++) {
-       var x0 = Niu[i][0];
-       datx = Date.UTC(x0);
-       console.log(x0);
-       console.log(datx);
-
-     }
-
-     $('#advance').highcharts({
-
-        title: {
-            text: 'Avance por fechas'
-        },
-
-        xAxis: {
-            type: 'datetime',
-            title:{
-              text: "Fecha"
-            }
-        },
-
-        yAxis: {
-            title:{
-             text:"Creados"
-            }
-        },
-
-        series: [{
-            name: "Cuestionarios Respondidos",
-            data:  Niu
-        }]
-    });
+  $('#opop').click(function(){
+  $('#tablex').slideToggle();
   });
-</script>
+  var Niu = <%=@grafica_de_estado%>
+  var NTransform = [];
+  for(i = 0; i < Niu.length; i++) {
+  var x0 = Niu[i][0];
+  datx = Date.UTC(x0);
+  console.log(x0);
+  console.log(datx);
+  }
+  $('#advance').highcharts({
+  title: {
+  text: 'Avance por fechas'
+  },
+  xAxis: {
+  type: 'datetime',
+  title:{
+  text: "Fecha"
+  }
+  },
+  yAxis: {
+  title:{
+  text:"Creados"
+  }
+  },
+  series: [{
+  name: "Cuestionarios Respondidos",
+  data:  Niu
+  }]
+  });
+  });
+  </script>
+  <script type="text/javascript">
+    $("#format-print").click(function(){
+      var url = window.location.href;
+      var divElements = $("#all-stata").html();
+      document.body.innerHTML = divElements ;
+      window.print();
+      window.location = url;
+    });
+  </script>

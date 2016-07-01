@@ -3,19 +3,31 @@
   <div class="container-fluid">
     <div class="container">
       <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+     
+      <% if current_user %>
+      <ul class="nav navbar-nav col-lg-12 col-md-8 col-md-3">
+        <% if current_user.image %>
+        <li ><a href="/" ><%= image_tag(current_user.image, width: "35px")%> <%= current_user.name %></a></li>
+        <%else%>
+        <li ><a href="/"><%= image_tag('favicon.png', width: "35px")%> <%= current_user.name %></a></li>
+        <%end%>
+      </ul>
+       <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar" style="position:relative; float: right; top: -59px; border-color: #fff; margin-bottom: 0px;">
         <span class="sr-only">Toggle navigation</span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
+      <%else%>
       <a class="navbar-brand" href="/"><%= image_tag('labop_250px.png', width: 100)%></a>
+      <%end%>
+
       </div>
       <% if current_user %>
       <div class="navbar-collapse collapse" id="navbar">
         <ul class="nav navbar-nav navbar-right">
           <li class="dropdown ">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"> <i class="fa fa-cogs" aria-hidden="true"></i>
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" style="height:65px;""> <i class="fa fa-cogs" aria-hidden="true"></i>
               Opcciones <span class="caret"></span></a>
               <ul class="dropdown-menu">
                 <li><%= link_to" Editar Usuario", edit_user_registration_path %></li>

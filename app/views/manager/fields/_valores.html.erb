@@ -1,0 +1,13 @@
+<div class="nested-fields">
+  <div class="row">
+    <div class="col-md-5">
+      <%= f.text_field :nombre_del_valor, placeholder: "Nombre del valor",  class: "form-control" %><br/>
+    </div>
+    <div class="col-md-5">
+      <%= f.text_field :cuantificador_del_valor, placeholder: "Valor númerico",  class: "form-control" %><br/>
+    </div>
+    <div class="col-md-2">
+      <%=  link_to_remove_association("X", f, :class => 'btn btn-warning pull-right',  data: {confirm: '¿Estas seguro de eliminar este valor?'}) %>
+    </div>
+  </div>
+</div>

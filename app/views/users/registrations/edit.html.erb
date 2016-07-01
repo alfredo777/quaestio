@@ -8,6 +8,10 @@
         <%= f.label :email %><br />
         <%= f.email_field :email, autofocus: true, class: "form-control" %>
       </div>
+      <div class="field">
+        <%= f.label :name %><br />
+        <%= f.text_field :name, autofocus: true, class: "form-control" %>
+      </div>
       <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
       <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
       <% end %>
@@ -28,7 +32,7 @@
       </div>
       <% end %>
       <h3>Cancelación de cuenta</h3>
-      <p>¿Estas infeliz? <%= button_to "Deseo cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estas seguro de cancelar tu cuenta?" }, method: :delete, class: "btn btn-danger pull-right"%></p>
+      <p>¿Estas infeliz? <%= link_to "Deseo cancelar mi cuenta", registration_path(resource_name), data: { confirm: "¿Estas seguro de cancelar tu cuenta?" }, method: :delete, class: "btn btn-danger pull-right"%></p>
       <%= link_to "Regresar", :back %><br/>
     </div><br/>
   </div>

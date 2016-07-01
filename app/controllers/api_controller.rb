@@ -1,4 +1,5 @@
 class ApiController < ApplicationController
+  layout "opl"
   def vista_para_respuesta
      @cuestionario = params[:id]
   end

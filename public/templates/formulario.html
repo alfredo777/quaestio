@@ -5,7 +5,7 @@
 {{/equal}}
 {{#equal cuestionario.paginar true}}
 <div class="row">
-  <div class="col-md-10">
+  <div class="col-md-9">
   <br/>
     <div class="progress">
       <div class="progress-bar progress-bar-info" id="pbar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 2%;">
@@ -13,7 +13,7 @@
       </div>
     </div>
   </div>
-  <div class="col-md-2">
+  <div class="col-md-3">
     {{#equal cuestionario.compartir true}}
     <div id="share"></div>
     {{/equal}}
@@ -43,16 +43,31 @@
       {{#multiplesuper respuestas}}
       {{/multiplesuper}}
       {{/equal}}
+      {{#equal tipo 'mtca'}}
+      {{#multiplesupermtca respuestas}}
+      {{/multiplesupermtca}}
+      {{/equal}}
+      {{#equal tipo 'mtcaval'}}
+      {{#each respuestas}}
+        <h4>{{titulo}}</h4>
+        {{#valuescontrapose valores id}}
+        {{/valuescontrapose}}
+      {{/each}}
+      {{/equal}}
+      {{#equal tipo 'mtcat'}}
+        {{#advancedcategory respuestas id categorias}}
+        {{/advancedcategory}}
+      {{/equal}}
       {{#equal tipo 'sl'}}
       {{#scalasuper respuestas id}}
       {{/scalasuper}}
       {{/equal}}
       {{#equal tipo 'es'}}
       {{#equal emogi false}}
-      {{#scala de_a de_b id }}{{/scala}}
+      {{#scala de_a de_b id pase_dinamicos}}{{/scala}}
       {{/equal}}
       {{#equal emogi true}}
-      {{#scalaemogi  de_a de_b id coleccion_emogi }} {{/scalaemogi}}
+      {{#scalaemogi  de_a de_b id coleccion_emogi pase_dinamicos }} {{/scalaemogi}}
       {{/equal}}
       {{/equal}}
       {{#equal tipo 'ab'}}
@@ -64,7 +79,12 @@
     </div>
     {{/each}}
     <center>
-    <div id="finish" style="display:none;"><h4>Hola has finalizado el cuestionario da click en enviar para que finalice el proceso. </h4></div>
+    <div id="finish" style="display:none;">
+    <center>
+      <img src="/images_sim/agora-log.png" alt="agora log" data-pin-nopin="true" />
+    <h4>Hola has finalizado el cuestionario da click en enviar para que finalice el proceso. </h4>
+    </center>
+    </div>
     </center>
     <input type="submit" value="Enviar" class="btn btn-default pull-right" id="envio"></input>
   </form>
@@ -101,10 +121,13 @@ thisPage.show();
 <script>
 $(document).ready(function(){
 $("#share").jsSocials({
+url: "{{#host}}{{/host}}/opl/{{cuestionario.id}}",
 text: "AGORA Forms | {{cuestionario.titulo}} ",
+shareIn: "popup",
 showLabel: false,
 showCount: "inside",
-shares: ["twitter", "facebook", "googleplus"]
+shares: ["facebook","twitter","linkedin","whatsapp","googleplus"],
+logo: "/images_sim/agora-log.png"
 });
 $(".zooming").elevateZoom({zoomWindowPosition: 1});
 $('.to-emogi').click(function(){

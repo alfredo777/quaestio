@@ -1,0 +1,278 @@
+{{#each pregunta}}
+<div style="width:100%; height: 950px; overflow: hidden;">
+<h2>Pregunta: {{titulo}}</h2>
+{{#if descripccion}}
+<h5>Descripcción: {{descripccion}}</h5>
+{{/if}}
+{{#each imagen}}
+    {{#diferent url null}}
+    <img src="{{#host}}{{/host}}{{small.url}}" /><br/><br/>
+    {{/diferent }}
+ {{/each}}
+<h4>{{tipo}}</h4>
+{{#equal tipo 'mt'}} 
+
+ <div id="chart-{{id}}"></div>
+ <script type="text/javascript">
+ setTimeout(function(){
+   var dataExec = []
+      {{#each estadisticas_de_respuesta}}
+        dataExec.push(["{{respuesta}}", parseInt("{{porciento}}")]);
+      {{/each}}
+      console.log(dataExec);
+      
+      barsChart("chart-{{id}}", dataExec, "{{title}}");
+
+      }, {{@index}}* 500);
+ </script>
+{{/equal}}
+{{#equal tipo 'es'}} 
+ <div id="chart-{{id}}"></div>
+ <script type="text/javascript">
+ setTimeout(function(){
+      var dataExec = []
+      {{#each estadisticas_de_respuesta}}
+        dataExec.push({ name: "Respuesta: {{respuesta}}", y: parseInt("{{veces_seleccionada}}")});
+      {{/each}}
+      
+        pieChart("chart-{{id}}", dataExec, "{{title}}");
+      }, {{@index}}* 500);
+ </script>
+ {{/equal}}
+
+ {{#equal tipo 'sl'}} 
+<div id="chart-{{id}}"></div>
+ <script type="text/javascript">
+ setTimeout(function(){
+   var dataExec = []
+      {{#each estadisticas_de_respuesta}}
+        dataExec.push(["{{respuesta}}", parseInt("{{porciento}}")]);
+      {{/each}}
+      console.log(dataExec);
+      
+        barsChart("chart-{{id}}", dataExec, "{{title}}");
+
+      }, {{@index}}* 500);
+ </script>
+ {{/equal}}
+
+ {{#equal tipo 'mtca'}}
+   <div id="chart-{{id}}"></div>
+   <script type="text/javascript">
+     $(document).ready(function(){
+        setTimeout(function(){
+          var dataExec = [];
+          {{#each estadisticas_de_respuesta}}
+            dataExec.push({ "respuesta":"{{respuesta}}", "valor":parseInt({{porciento}}), "id": {{id}} });
+          {{/each}}
+          var data = dataExec;
+          var names = [];
+          var uniqueNames = [];
+          var xdata = {};
+          var datatoPapere = [];
+
+          $.each(data, function(index, item){
+              names.push(item.valor);
+          });
+
+          $.each(names, function(i, el){
+              if($.inArray(el, uniqueNames) === -1) uniqueNames.push(el);
+          });
+
+          $.each(data, function(index, item){
+              names.push(item.respuesta);
+          });
+
+          
+          $.each(data, function(index, item){ 
+            if (xdata[item.respuesta] === undefined)
+                xdata[item.respuesta] = [item.respuesta]; 
+            xdata[item.respuesta].push(item.valor);
+          });
+          
+
+          $.each(xdata, function(index, item){ 
+             var itemA = [];
+             for(i=1; i < item.length; i++){
+                itemA.push(item[i]);
+             }
+             datatoPapere.push({
+                name: item[0],
+                data: itemA
+             });
+          });
+          function compareNumbers(a, b)
+          {
+              return a - b;
+          }
+
+          console.log(uniqueNames);
+
+          datatoPapere;
+          $("#chart-{{id}}").data('series', datatoPapere);
+          stackedbar("chart-{{id}}", uniqueNames, "{{title}}");
+       }, {{@index}}* 2000);
+     });
+     
+   </script>
+ {{/equal}}
+
+ {{#equal tipo 'ab'}} 
+<table class="table">
+  <thead >
+    <tr>
+      <th>Respuesta</th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each estadisticas_de_respuesta}}
+      <tr>
+        <td>{{respuesta}}</td>
+      </tr>
+      {{/each}}
+  </tbody>
+</table>
+ {{/equal}}
+</div>
+{{/each}}
+
+
+<script type="text/javascript">
+
+function pieChart(id, dataExec, title){
+
+    var dataExec = JSON.stringify(dataExec);
+      $('#'+id).data('series',dataExec);
+      // Make monochrome colors and set them as default for all pies
+    Highcharts.getOptions().plotOptions.pie.colors = (function () {
+        var colors = [],
+            base = Highcharts.getOptions().colors[0],
+            i;
+
+        for (i = 0; i < 10; i += 1) {
+            // Start out with a darkened base color (negative brighten), and end
+            // up with a much brighter color
+            colors.push(Highcharts.Color(base).brighten((i - 3) / 7).get());
+        }
+        return colors;
+    }());
+    setTimeout(function(){
+
+
+    // Build the chart
+    $('#'+id).highcharts({
+        chart: {
+            plotBackgroundColor: null,
+            plotBorderWidth: null,
+            plotShadow: false,
+            type: 'pie'
+        },
+        title: {
+            text: title
+        },
+        tooltip: {
+            pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+            pie: {
+                allowPointSelect: true,
+                cursor: 'pointer',
+                dataLabels: {
+                    enabled: true,
+                    format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+                    style: {
+                        color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+                    }
+                }
+            }
+        },
+        series: [{
+            name: 'Respuestas',
+            data: JSON.parse($('#'+id).data('series'))
+        }]
+    });
+    },1000);
+}
+
+function barsChart(id, data, title){
+    $('#'+ id).highcharts({
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: title
+        },
+        xAxis: {
+            type: 'category',
+            labels: {
+                rotation: -45,
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: '%'
+            }
+        },
+        legend: {
+            enabled: false
+        },
+        tooltip: {
+            pointFormat: 'Dato Respuesta</b>'
+        },
+        series: [{
+            name: 'Pregunta',
+            data: data,
+            dataLabels: {
+                enabled: true,
+                rotation: -90,
+                color: '#FFFFFF',
+                align: 'right',
+                format: '{point.y:.1f}', // one decimal
+                y: 10, // 10 pixels down from the top
+                style: {
+                    fontSize: '13px',
+                    fontFamily: 'Verdana, sans-serif'
+                }
+            }
+        }]
+    });
+}
+
+function stackedbar(id, category, title){
+ var data = $('#'+id).data('series');
+ var datai = JSON.stringify(data);
+  console.log(datai);
+
+ $('#'+id).highcharts({
+        chart: {
+            type: 'bar'
+        },
+        title: {
+            text: title
+        },
+        xAxis: {
+            categories: category
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Datos de selección abierta seccionados por valores'
+            }
+        },
+        legend: {
+            reversed: true
+        },
+        plotOptions: {
+            series: {
+                stacking: 'normal'
+            }
+        },
+        series: data
+    });
+}
+</script>
