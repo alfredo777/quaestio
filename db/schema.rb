@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160627060335) do
+ActiveRecord::Schema.define(version: 20160711233143) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
@@ -102,6 +102,7 @@ ActiveRecord::Schema.define(version: 20160627060335) do
     t.boolean  "uso"
     t.datetime "created_at",      null: false
     t.datetime "updated_at",      null: false
+    t.string   "email"
   end
 
   add_index "token_de_descargas", ["token"], name: "index_token_de_descargas_on_token"

@@ -21,6 +21,10 @@
 //= require bootstrap/dropdown
 //= require handlebars
 //= require highcharts
+//= require soundmanager2
+//= require soundmanager2-jsmin
+//= require soundmanager2-nodebug-jsmin
+//= require soundmanager2-nodebug
 //= require highcharts/highcharts-more
 //= require turbolinks
 //= require_tree .

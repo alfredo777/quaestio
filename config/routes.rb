@@ -1,6 +1,4 @@
 Rails.application.routes.draw do  
-  
-
   root 'manager#all'
   get 'manager/all', as: :cuestionarios
   get 'manager/view', as: :ver_formulario
@@ -19,10 +17,12 @@ Rails.application.routes.draw do
   get "manager/todas_las_respuestas_n"
   get "manager/estadisticas", as: :estadisticas
   get "manager/pregunta_view", as: :pregunta_view
+  get "manager/asign_code", as: :asign_code
+  get "manager/code_create"
+  post "manager/code_create"
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks"}
   get 'api/vista_para_respuesta'
   get 'api/vista_gracias_respuesta'
   get 'gracias', to: "api#vista_gracias_respuesta", as: :gracias
   get 'opl/:id', to: "api#vista_para_respuesta", as: :opl
-  
 end

@@ -100,6 +100,23 @@ class ManagerController < ApplicationController
   def update
   end
 
+  def asign_code
+    @cuestionario = Cuestionario.find(params[:id])
+
+  end
+
+  def code_create
+    number = params[:numbertokens].to_i
+
+    number.times do 
+     
+    @code = TokenDeDescarga.create(cuestionario_id: params[:cuestionario_id], token: SecureRandom.hex(7))
+
+    end
+
+    redirect_to :back
+  end
+
   
 
   def delete

@@ -4,7 +4,7 @@
   <div class="form-group panel" style="background: #efefef; padding: 5%;">
     <%= f.text_field :titulo, placeholder: "Título", class: "form-control"%><br/>
     <%= f.text_area :instrucciones, placeholder: "Instrucciones",  class: "form-control"%><br/>
-    <%= f.check_box :paginar %> <%= label_tag :paginar %> |
+    <%= f.check_box :paginar, checked: true %> <%= label_tag :paginar %> |
     <%= f.check_box :compartir %> <%= label_tag :compartir %>
   </div>
   <fieldset id="preguntas">
@@ -18,22 +18,22 @@
     Abierta
     <%end%>
     <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_simple' do %>
-    Multiple
+    Multiple Básica
     <%end%>
     <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_simple_rango' do %>
-    Rango
+      Dicotómica (si/no)
     <%end%>
     <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/escala' do %>
     Escala
     <%end%>
     <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_campo_abierto' do %>
-    Multiple con campo abierto
+      Batería de atributos
     <%end%>
     <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_valores_abiertos' do %>
-      Multiple con múltiples valores
+      Batería de Atributos con preguntas varias
     <%end%>
     <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_con_categorias' do %>
-      Multiple con múltiples categorias
+      Batería de Atributos con Escala
     <%end%>
     <%= f.submit 'Publicar el cuestionario', class: "btn btn-success pull-right"%>
   </div>
