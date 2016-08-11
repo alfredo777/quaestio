@@ -42,9 +42,9 @@
         <td><%= cuestionario.instrucciones %></td>
         <td>
           <div class=" btn-group pull-right">
-            <%= link_to "CSV", todas_las_respuestas_del_form_path(id: cuestionario.id), class:"btn btn-default"%>
+            <%#= link_to "CSV", todas_las_respuestas_del_form_path(id: cuestionario.id), class:"btn btn-default"%>
             <!--<a href='<%="data:text/json;charset=utf-8,#{@json_data.to_json}"%>' download='<%= "#{cuestionario.id}-#{SecureRandom.hex(10)}-data.json" %>'  class="btn btn-default">JSON <i class="fa fa-download" aria-hidden="true"></i></a>-->
-            <%= link_to "SPSS", to_spss_path(id: cuestionario.id, format: "csv"), class: "btn btn-default" %>
+            <%= link_to "CSV Formateada", to_spss_path(id: cuestionario.id, format: "csv"), class: "btn btn-default" %>
              <a href="<%=estadisticas_path(id: cuestionario.id )%>" class="btn btn-default"> Respuestas <i class="fa fa-pie-chart" aria-hidden="true" ></i></a>
             <%= link_to "Ver formulario", ver_formulario_path(id: cuestionario.id ), class: "col-md-3 btn btn-default"%>
             <%= link_to asign_code_path(id: cuestionario.id), class:"btn btn-default" do%>
