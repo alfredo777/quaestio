@@ -1,10 +1,13 @@
 require File.expand_path('../boot', __FILE__)
-
+require 'csv'
 require 'rails/all'
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
 Bundler.require(*Rails.groups)
+
+require File.expand_path('../to_sps', __FILE__)
+
 
 module Quaestio
   class Application < Rails::Application

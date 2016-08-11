@@ -23,6 +23,8 @@ Rails.application.routes.draw do
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks"}
   get 'api/vista_para_respuesta'
   get 'api/vista_gracias_respuesta'
+  get 'api/json_view_cuestionario'
   get 'gracias', to: "api#vista_gracias_respuesta", as: :gracias
   get 'opl/:id', to: "api#vista_para_respuesta", as: :opl
+  get 'to_spss/:id', to: "api#spss_tables", as: :to_spss
 end

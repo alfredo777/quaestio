@@ -283,7 +283,7 @@ Handlebars.registerHelper('advancedcategory', function(items, id, categorias, op
     out = out + '<td class="active">'+item.titulo+'</td>';
     var superItem = item;
     $.each(categorias, function(index, itemcat){
-      out = out + '<td><input name="tipo[respuesta]['+id+'][valor][]"  value="['+superItem.id+','+itemcat.id+']"  type="checkbox" class="pull-right" ></input></td>';
+      out = out + '<td><input name="tipo[respuesta_catgorica]['+id+'][valor][]"  value="['+superItem.id+','+itemcat.id+']"  type="checkbox" class="pull-right" ></input></td>';
     });
     out = out + '</tr>';
   });

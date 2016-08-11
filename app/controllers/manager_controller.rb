@@ -110,7 +110,7 @@ class ManagerController < ApplicationController
 
     number.times do 
      
-    @code = TokenDeDescarga.create(cuestionario_id: params[:cuestionario_id], token: SecureRandom.hex(7))
+    @code = TokenDeDescarga.create(cuestionario_id: params[:cuestionario_id], token: "#{SecureRandom.hex(2)}#{current_user.id}")
 
     end
 
@@ -232,25 +232,46 @@ class ManagerController < ApplicationController
     puts params
     px = params[:tipo][:pregunta]
     rx = params[:tipo][:respuesta]
+    cx = params[:tipo][:respuesta_catgorica]
+
+    ####### tipo pregunta ########
     if !px.nil?
-    px.each do |pa|
-      @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Pregunta", contestacion_id: pa[0], valor: pa[1][:valor], indice_de_creacion: @inx)
-    end
-    end
-    if !rx.nil?
-    rx.each do |ra|
-     valorx = ra[1][:valor]
-     if valorx.kind_of?(Array)
-      valorx.each do |vx|
-      arr = eval(vx)
-      valor = arr[0]
-      categoria = arr[1]
-      @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: valor, categorias_en_preguntum_id: categoria, indice_de_creacion: @inx)
+      px.each do |pa|
+        @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Pregunta", contestacion_id: pa[0], valor: pa[1][:valor], indice_de_creacion: @inx)
       end
-     else
-      @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: ra[1][:valor], indice_de_creacion: @inx)
-     end
     end
+    ###### tipo respuesta ########
+
+    if !rx.nil?
+      rx.each do |ra|
+        valorx = ra[1][:valor]
+         if valorx.kind_of?(Array)
+          valorx.each do |vx|
+            arr = eval(vx)
+            valor = arr[0]
+            categoria = arr[1]
+            @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: valor, categorias_en_preguntum_id: categoria, indice_de_creacion: @inx)
+          end
+         else
+          @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: ra[1][:valor], indice_de_creacion: @inx)
+         end
+      end
+    end
+    ####### respuesta categorica #######
+    if !cx.nil?
+      cx.each do |rc|
+        valorx = rc[1][:valor]
+        if valorx.kind_of?(Array)
+          valorx.each do |vx|
+          arr = eval(vx)
+          valor = arr[0]
+          categoria = arr[1]
+          @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Pregunta", contestacion_id: rc[0], valor: valor, categorias_en_preguntum_id: categoria, indice_de_creacion: @inx)
+        end
+       else
+        @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Pregunta", contestacion_id: rc[0], valor: rc[1][:valor], indice_de_creacion: @inx)
+       end
+      end
     end
     redirect_to gracias_path(id: cuestionario)
   end
