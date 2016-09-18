@@ -1,0 +1,17 @@
+<center>
+  <div class="row">
+  <h2>Ingresa el código de validación para continuar</h2>
+  <%= form_tag update_token_path do -%><br/><br/>
+    <div class="col-lg-12">
+    <%= image_tag('agora-log.png')%>
+    </div>
+    <div class="col-md-3">
+    </div>
+    <div class="col-md-6"><br/><br/><br/>
+    <%= text_field_tag 'validete_token', '' , class: "form-control", placeholder: "Código para validación de cuneta" %></div><br/><br/>
+    <div class="col-lg-12"><br/><br/>
+    <%= submit_tag "Validar Código", class: "btn btn-primary"%>
+    </div>
+  <%end%>
+  </div>
+</center>

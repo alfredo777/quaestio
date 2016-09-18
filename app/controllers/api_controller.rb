@@ -12,7 +12,7 @@ class ApiController < ApplicationController
     cuestionario = Cuestionario.find(params[:id])
     preguntas = cuestionario.preguntas
     
-
+    ####### head de preguntas #########
     head = preguntas.map { |e| e.titulo.gsub(/^(.{12,}?).*$/m,'\1').remove('¿') }
      preguntas.map {|e| puts "#{e.tipo} #{e.id}" }
     array_order = []
@@ -51,7 +51,14 @@ class ApiController < ApplicationController
             cxf = hash_respueta.valor
           end
           hash_value.push([id,cxf])
-        when typeX == 'mtca' || typeX == 'mtcaval'
+        when typeX == 'mtca' 
+           if hash_respueta.valor.mb_chars.length > 1
+           cxf = hash_respueta.valor
+           else
+           cxf = hash_respueta.valor.to_i
+           end
+           hash_value.push([id,cxf])
+        when typeX == 'mtcaval'
            cxf = hash_respueta.valor.to_i
            hash_value.push([id,cxf])
         when typeX == 'mtcat'
@@ -66,7 +73,8 @@ class ApiController < ApplicationController
 
     ###### comparando columnas ######
     puts "#{collect_preguntas}"
-    csv_string = CSV.generate do |csv|
+    csv_string = CSV.generate(:col_sep => ";") do |csv|
+
       csv << head
       collection_of_parts.each_with_index do |c, index|
         colection = []
@@ -91,8 +99,107 @@ class ApiController < ApplicationController
     end
   end
 
+  def advanced_json
+    cuestionario = Cuestionario.find(params[:id])
+    preguntas = cuestionario.preguntas
+    
+    ####### head de preguntas #########
+    head = preguntas.map { |e| e.titulo.gsub(/^(.{12,}?).*$/m,'\1').remove('¿') }
+     preguntas.map {|e| puts "#{e.tipo} #{e.id}" }
+    array_order = []
+
+    head_n = preguntas.map { |e|  e.respuestas.each_with_index do |r, index| 
+       array_order.push(r.id)  
+       array_order.push(index+1)
+       end 
+    } 
+
+    array_order = Hash[*array_order]
+    head = ["id"] + head
+    ##### se genera la tabla de respuestas #####
+    collection_of_parts = []
+    collect_preguntas = preguntas.map { |e| e.id }
+
+    cuestionario.indice_de_creacions.each do |respuetas|
+      hash_value = []
+      respuetas.todas_las_respuestas.each_with_index do |hash_respueta, index|
+        case hash_respueta.contestacion_type
+          when "Pregunta"
+            id = hash_respueta.contestacion.id
+            typeX = hash_respueta.contestacion.tipo
+            pregunta = hash_respueta.contestacion.titulo
+            respuesta = hash_respueta.valor
+            idx = hash_respueta.indice_de_creacion
+            puts idx
+          when "Respuesta"
+            id = hash_respueta.contestacion.pregunta.id
+            typeX = hash_respueta.contestacion.pregunta.tipo
+            pregunta = hash_respueta.contestacion.pregunta.titulo
+            respuesta = hash_respueta.valor
+            idx = hash_respueta.indice_de_creacion
+            puts idx
+        end
+
+       case 
+        when typeX == 'sl' || typeX == 'mt'
+          cxf = hash_respueta.valor.to_i
+          finder = array_order[cxf]
+          hash_value.push([pregunta,{"#{hash_respueta.contestacion.titulo}": "#{finder}"}])
+        when typeX == 'ab' || typeX == 'es'
+          if typeX == 'es'
+            cxf = hash_respueta.valor
+             res = scala_interprete(cxf)
+             hash_value.push([pregunta,{"#{res}": "#{cxf}" }])
+          else
+            cxf = hash_respueta.valor
+             hash_value.push([pregunta,"#{cxf}"])
+          end
+         
+        when typeX == 'mtca' || typeX == 'mtcaval'
+           cxf = hash_respueta.valor
+           hash_value.push([pregunta,{"#{hash_respueta.contestacion.titulo}": "#{cxf}" }])
+        when typeX == 'mtcat'
+           cxf = hash_respueta.valor.to_i
+           finder = array_order[cxf]
+           cat =  hash_respueta.categorias_en_preguntum_id
+           ccc = CategoriasEnPreguntum.find_by_valor(cat.to_i)
+           puts ccc
+           puts "************ #{hash_respueta.contestacion.id} - #{hash_respueta.contestacion.titulo} "
+           hash_value.push([pregunta,{"#{cat}": "#{finder}"}])
+        end
+      end
+      hashes = Hash.new{ |h,k| h[k]=[] }.tap{ |h| hash_value.each{ |k,v| h[k] << v } }
+      holala = {
+        id: "#{respuetas.idx}",
+        respuetas: hashes
+      }
+      collection_of_parts.push(holala)
+    end
+
+    render json: collection_of_parts
+  end
+
+  def scala_interprete(n)
+    scale = {
+      "1" => "Muy Malo",
+      "2" => "Malo",
+      "3" => "Medio Malo",
+      "4" => "Regular",
+      "5" => "Aceptable",
+      "6" => "Bueno",
+      "7" => "Muy bueno",
+      "8" => "Mas que muy bueno",
+      "9" => "Excelente",
+      "10" => "Magnifico"
+    }
+
+    r =  scale["#{n}"]
+    @r = r 
+  end
+
   def json_view_cuestionario
     token = TokenDeDescarga.find_by_token(params[:tokenizer])
+    if token
     cuestionario = token.cuestionario
     preguntas = []
     cuestionario.preguntas.each do |pregunta|
@@ -115,8 +222,12 @@ class ApiController < ApplicationController
           pase_dinamicos: pase_dinamicos_function(pregunta.id)
       })
     end
-    
+    end
+    if token
     render json: {cuestionario: cuestionario, preguntas: preguntas}
+    else
+    render json: {cuestionario: false}
+    end
   end
 
   def respuestas_accces_function(id)

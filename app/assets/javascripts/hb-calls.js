@@ -270,6 +270,9 @@ Handlebars.registerHelper('valuescontrapose', function(items, id,options) {
 });
 
 Handlebars.registerHelper('advancedcategory', function(items, id, categorias, options){
+  console.log(id);
+  console.log(items);
+  console.log(categorias);
   var out = "<table class='table table-striped '>";
   out = out + "<thead><tr class='active'>";
   out = out + '<th> Opcciones </th>'

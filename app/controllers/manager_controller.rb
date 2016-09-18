@@ -1,5 +1,6 @@
 class ManagerController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:view, :responder]
+  before_filter :current_filted_token, :only => [:all, :new, :code_create, :asign_code ]
   before_action :authenticate_user!, :only => [:all, :view, :new, :create, :edit, :update, :todas_las_respuestas_del_form, :delete, :xml_view_cuestionario, :estadisticas, :pregunta_view, :todas_las_respuestas_n]
 
   def all
@@ -12,6 +13,21 @@ class ManagerController < ApplicationController
 
   def new
     @cuestionario = Cuestionario.new
+  end
+  def update_p_user
+    date = DateTime.now
+    date = date.strftime("%Y%m%d")
+    @code = "VAJOI#{date}"
+  end
+  def update_token
+    date = DateTime.now
+    date = date.strftime("%Y%m%d")
+    @code = "VAJOI#{date}"
+    if params[:validete_token] == @code
+    current_user.validation_by_token = params[:validete_token]
+    current_user.save(:validate => false)
+    redirect_to cuestionarios_path
+    end
   end
 
   def create
@@ -102,18 +118,13 @@ class ManagerController < ApplicationController
 
   def asign_code
     @cuestionario = Cuestionario.find(params[:id])
-
   end
 
   def code_create
     number = params[:numbertokens].to_i
-
     number.times do 
-     
     @code = TokenDeDescarga.create(cuestionario_id: params[:cuestionario_id], token: "#{SecureRandom.hex(2)}#{current_user.id}")
-
     end
-
     redirect_to :back
   end
 
@@ -250,6 +261,9 @@ class ManagerController < ApplicationController
             arr = eval(vx)
             valor = arr[0]
             categoria = arr[1]
+            puts valor
+            puts categoria
+            puts ra[0]
             @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Respuesta", contestacion_id: ra[0], valor: valor, categorias_en_preguntum_id: categoria, indice_de_creacion: @inx)
           end
          else
@@ -261,11 +275,12 @@ class ManagerController < ApplicationController
     if !cx.nil?
       cx.each do |rc|
         valorx = rc[1][:valor]
+        identificador = rc[0] ######### pregunta
         if valorx.kind_of?(Array)
           valorx.each do |vx|
           arr = eval(vx)
-          valor = arr[0]
-          categoria = arr[1]
+          valor = arr[0] ###### respuesta  
+          categoria = arr[1] ###### categoria 
           @base_typo_preguntas = BaseDeRespuesta.create(contestacion_type: "Pregunta", contestacion_id: rc[0], valor: valor, categorias_en_preguntum_id: categoria, indice_de_creacion: @inx)
         end
        else
@@ -273,7 +288,11 @@ class ManagerController < ApplicationController
        end
       end
     end
-    redirect_to gracias_path(id: cuestionario)
+
+    respond_to do |format|
+      format.html {redirect_to gracias_path(id: cuestionario)}
+      format.json  { render json: "Cuestionario Sincronizado" }
+    end
   end
 
   def estadisticas
@@ -597,7 +616,11 @@ class ManagerController < ApplicationController
     render json: {pregunta: respuestas_por_reguntas}
   end
   
-
+  def current_filted_token
+    if current_user.validation_by_token.nil?
+      redirect_to update_code_for_user_path
+    end
+  end
 
   def cuestionario_params
     params.require(:cuestionario).permit(:titulo, :instrucciones, :paginar, :compartir, preguntas_attributes: [:titulo, :tipo, :descripccion, :imagen, :valor, :de_a, :de_b, :emogi, :coleccion_emogi, respuestas_attributes: [:titulo, :valor, :checkflag, :pase, volores_multiples_to_respuesta_attributes:[:nombre_del_valor, :cuantificador_del_valor]], pase_dinamicos_attributes: [:de_a, :de_b, :pase], categorias_en_pregunta_attributes: [:titulo, :valor]])

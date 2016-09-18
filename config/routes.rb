@@ -20,11 +20,16 @@ Rails.application.routes.draw do
   get "manager/asign_code", as: :asign_code
   get "manager/code_create"
   post "manager/code_create"
+  get "manager/update_p_user", as: :update_code_for_user
+  get "manager/update_token", as: :update_token
+  post "manager/update_token"
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks"}
   get 'api/vista_para_respuesta'
   get 'api/vista_gracias_respuesta'
   get 'api/json_view_cuestionario'
+  get 'api/advanced_json', as: :advanced_json
   get 'gracias', to: "api#vista_gracias_respuesta", as: :gracias
   get 'opl/:id', to: "api#vista_para_respuesta", as: :opl
   get 'to_spss/:id', to: "api#spss_tables", as: :to_spss
+  get 'normalize_data/cuestionario_normalizado', as: :cuestionario_normalizado
 end

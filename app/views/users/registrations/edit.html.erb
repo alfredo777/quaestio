@@ -1,6 +1,7 @@
 <div class="row">
   <div class="col-sm-1 col-md-10 col-md-offset-1 panel" style="background: #eee;">
     <h2>Editar Usuario</h2>
+    <h3>Validado con: <%= current_user.validation_by_token%></h3>
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
     <%= devise_error_messages! %>
     <div class="form-group">

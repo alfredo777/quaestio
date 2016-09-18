@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160711233143) do
+ActiveRecord::Schema.define(version: 20160904000514) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20160711233143) do
     t.string   "name"
     t.string   "image"
     t.boolean  "free",                   default: true
+    t.string   "validation_by_token"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
