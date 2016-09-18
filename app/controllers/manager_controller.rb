@@ -617,8 +617,10 @@ class ManagerController < ApplicationController
   end
   
   def current_filted_token
-    if current_user.validation_by_token.nil?
-      redirect_to update_code_for_user_path
+    if current_user
+      if current_user.validation_by_token.nil?
+        redirect_to update_code_for_user_path
+      end
     end
   end
 
