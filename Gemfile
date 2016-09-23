@@ -31,6 +31,8 @@ gem 'highcharts-rails', '~> 4.1', '>= 4.1.9'
 gem 'carrierwave'
 gem "mini_magick"
 gem 'soundmanager2-rails'
+gem "animate-rails"
+
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'
 gem 'will_paginate'

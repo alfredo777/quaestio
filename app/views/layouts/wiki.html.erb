@@ -10,15 +10,9 @@
   </head>
   <body>
     <%= render partial: "/manager/menu" %>
-    <% if current_user %>
     <div class="container">
       <%= yield %>
     </div>
-    <%else%>
-    <div class="super-image" style="background: url('/images_sim/agora2_baja.jpg'); width: 100%; margin-top:-20px; background-size: 100% 100%; background-repeat: no-repeat;" id="super-image" >
-      <%= yield %>
-    </div>
-    <%end%>
   </body>
   <footer class="navbar navbar-inverse navbar-static-top" style="margin-bottom:0px; background:#F7F8E0; border:solid #F7F8E0;">
     <div class="container">
@@ -35,10 +29,4 @@
 <script type="text/javascript">
 $('[data-toggle="tooltip"]').tooltip();
 $('.super-image').height($(document).height());
-</script>
-
-<script type="text/javascript">
-  setTimeout(function(){
-    SliderMYIMG('super-image', '/images_sim/agora3.jpg', 'bounceOut');
-  },30000);
 </script>

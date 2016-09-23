@@ -29,4 +29,46 @@
 //= require turbolinks
 //= require_tree .
 
+function readURL(input,targetDIV) {
+
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#'+targetDIV).append('src', e.target.result);
+        }
+
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+
+function readNAME(input,targetDIV) {
+    if (input.files && input.files[0]){       
+            $('#'+targetDIV).html('<h4><i class="fa fa-file-text" aria-hidden="true"></i> '+input.files[0].name+'</h4>');
+    }       
+}
+
+function SliderMYIMG(div, img, animate){
+  $('#'+div).animateCss(animate);
+
+  setTimeout(function(){
+    $('#'+div).animateCss('zoomInUp');
+    $('#'+div).css({'background':'url'+"("+img+")",
+      "background-size": "100%"
+    });
+
+  },700);
+}
+
+
+$.fn.extend({
+    animateCss: function (animationName) {
+        var animationEnd = 'webkitAnimationEnd mozAnimationEnd MSAnimationEnd oanimationend animationend';
+        this.addClass('animated ' + animationName).one(animationEnd, function() {
+            $(this).removeClass('animated ' + animationName);
+        });
+    }
+});
+
+
 

@@ -1,4 +1,5 @@
 Rails.application.routes.draw do  
+  
   root 'manager#all'
   get 'manager/all', as: :cuestionarios
   get 'manager/view', as: :ver_formulario
@@ -32,4 +33,13 @@ Rails.application.routes.draw do
   get 'opl/:id', to: "api#vista_para_respuesta", as: :opl
   get 'to_spss/:id', to: "api#spss_tables", as: :to_spss
   get 'normalize_data/cuestionario_normalizado', as: :cuestionario_normalizado
+
+
+  get 'wiki/acceso_a_la_wiki', as: :acceso_a_la_wiki
+  get 'wiki/registro_en_wiki', as: :registro_en_wiki
+  get 'wiki/solicitar_codigo_wiki', as: :codigo_wiki
+  get 'wiki/find_user_wiki', as: :find_user_wiki
+  get 'wiki/ver_tutoriales', as: :tutoriales
+  get 'wiki/evaluar_conocimiento_app_moobile', as: :evaluate
+
 end

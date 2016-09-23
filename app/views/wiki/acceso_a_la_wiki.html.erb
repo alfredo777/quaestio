@@ -1,0 +1,21 @@
+<br/><br/><br/>
+<div class="col-md-3"></div>
+<div class="col-md-6 panel panel-default" style="background: #eee; margin-top: 40px; opacity: 0.80;">
+<h2>Wiki de Agora - Shapes & Forms</h2>
+
+<%= form_tag find_user_wiki_path do -%>
+<div class="input-group">
+  <span class="input-group-addon" id="basic-addon1">#código del sistema</span>
+  <%= text_field_tag 'code', '', placeholder: "Ingresa tu código de acceso a la wiki", class: "form-control", 'aria-describedby': "basic-addon1"%>
+</div><br/>
+<div class="col-md-6">
+<%= link_to 'Resgistrarse', registro_en_wiki_path, class: 'btn btn-info', style: "width:100%; font-size:18px; margin-bottom:10px;" %>
+</div>
+<div class="col-md-6">
+<%= submit_tag 'Enviar Código', class: "btn btn-primary pull-right", style: "width:100%; font-size:18px; margin-bottom:10px;" %>
+</div>
+<br/><br/>
+<%end%>
+<br/><br/>
+</div>
+<div class="col-md-3"></div>
