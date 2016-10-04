@@ -16,7 +16,8 @@ class ApplicationController < ActionController::Base
     @emogi = [['Con relieve', '/images_sim/tipo1/' ], ['Sin relieve', '/images_sim/tipo2/' ]]
   end
 
-
+  def current_path
+  end
   protected
 
   def configure_permitted_parameters

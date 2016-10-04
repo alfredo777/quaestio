@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160904000514) do
+ActiveRecord::Schema.define(version: 20160928001754) do
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
@@ -138,6 +138,24 @@ ActiveRecord::Schema.define(version: 20160904000514) do
     t.integer  "cuantificador_del_valor"
     t.datetime "created_at",              null: false
     t.datetime "updated_at",              null: false
+  end
+
+  create_table "wiki_users", force: :cascade do |t|
+    t.string   "nombre"
+    t.string   "apellidos"
+    t.string   "email"
+    t.string   "telefono"
+    t.text     "direccion"
+    t.string   "puesto"
+    t.string   "identificacion"
+    t.string   "numero_identificacion"
+    t.string   "rol_en_el_preoceso"
+    t.string   "curp"
+    t.string   "compania_con_registro"
+    t.string   "codigo_de_aprovacion"
+    t.string   "codigo_para_actividad"
+    t.datetime "created_at",            null: false
+    t.datetime "updated_at",            null: false
   end
 
 end

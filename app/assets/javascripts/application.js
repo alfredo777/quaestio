@@ -54,7 +54,7 @@ function SliderMYIMG(div, img, animate){
   setTimeout(function(){
     $('#'+div).animateCss('zoomInUp');
     $('#'+div).css({'background':'url'+"("+img+")",
-      "background-size": "100%"
+      "background-size": "100% 100%"
     });
 
   },700);

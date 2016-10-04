@@ -1,0 +1,28 @@
+
+<div class="col-md-4">
+<nav class="navbar" style="background:#fff;">
+<ul class="nav nav-pills nav-stacked">
+  <li class="<%= 'active' if current_page?(:controller => 'wiki', :action => 'ver_tutoriales')  %>">
+    <%= link_to tutoriales_path do %>  Introducción a Agora <i class="fa fa-home pull-right" aria-hidden="true"></i> <%end%>
+  </li>
+  <li class="<%= 'active' if current_page?(:controller => 'wiki', :action => 'curso_mobil')  %>">
+   <%= link_to mobil_path do %>  Tutorial de Manejo de Dispositivos Mobiles <i class="fa fa-flag-checkered pull-right" aria-hidden="true"></i> <%end%>
+  </li>
+  <li class="<%= 'active' if current_page?(:controller => 'wiki', :action => 'android')  %>">
+   <%= link_to android_path do %>  Tutorial de App Mobile Android <i class="fa fa-flag-checkered pull-right" aria-hidden="true"></i><%end%>
+  </li>
+  <li role="presentation">
+    <a> Tutorial de App Mobile IOs <i class="fa fa-flag-checkered pull-right" aria-hidden="true"></i></a>
+  </li>
+  <li role="presentation">
+   <a>  Evaluación de conocimientos Agora <i class="fa fa-university pull-right" aria-hidden="true"></i> </a>
+  </li>
+  <li role="presentation">
+   <a>  Mis datos de Usuario <i class="fa fa-user pull-right" aria-hidden="true"></i> </a>
+  </li>
+  <li role="presentation">
+   <a> Cerrar sesion <i class="fa fa-power-off pull-right" aria-hidden="true"></i> </a>
+  </li>
+</ul>
+</div>
+</nav>

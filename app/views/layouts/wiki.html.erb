@@ -10,21 +10,14 @@
   </head>
   <body>
     <%= render partial: "/manager/menu" %>
+
     <div class="container">
+      <%= render partial: "/wiki/left_menu"%>
+      <div class="col-md-8">
       <%= yield %>
+      </div>
     </div>
   </body>
-  <footer class="navbar navbar-inverse navbar-static-top" style="margin-bottom:0px; background:#F7F8E0; border:solid #F7F8E0;">
-    <div class="container">
-    <p class="text-muted">
-    <div class="pull-right">
-    <%= link_to acceso_a_la_wiki_path do %>
-      Ingresar a la Wiki de Agora
-    <%end%>
-    </div>
-    </p>
-    </div>
-  </footer>
 </html>
 <script type="text/javascript">
 $('[data-toggle="tooltip"]').tooltip();

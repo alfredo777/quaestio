@@ -2,27 +2,35 @@
 <div class="col-md-3"></div>
 <div class="col-md-6 panel panel-default" style="background: #eee; margin-top: 40px; opacity: 0.80;">
   <h2>Registro para Acceso a Wiki</h2>
-  <%= form_tag find_user_wiki_path do -%>
+  <%= form_tag create_user_wiki_path, multipart: true do -%>
   <%= text_field_tag 'nombre', '', placeholder: "Nombre", class: "form-control"%> <br/>
   <%= text_field_tag 'apellidos', '', placeholder: "Apellidos", class: "form-control"%> <br/>
-  <%= text_field_tag 'identificacion', '', placeholder: "Identificación", class: "form-control"%> <br/>
   <div class="input-group">
     <span class="input-group-addon" id="basic-addon1">@email</span>
     <%= text_field_tag 'email', '', placeholder: "Email", class: "form-control", 'aria-describedby': "basic-addon1"%>
   </div> <br/>
   <div class="input-group">
     <span class="input-group-addon" id="basic-addon2">#teléfono</span>
-    <%= text_field_tag 'phone', '', placeholder: "Teléfono", class: "form-control", 'aria-describedby': "basic-addon2"%>
+    <%= text_field_tag 'telefono', '', placeholder: "Teléfono", class: "form-control", 'aria-describedby': "basic-addon2"%>
   </div> <br/>
   <%= text_field_tag 'curp', '', placeholder: "CURP", class: "form-control"%> <br/>
   <%= text_area_tag 'direccion', '', placeholder: "Dirección del solicitante", class: "form-control"%> <br/>
-
+  <%= text_field_tag 'compania_con_registro', '' , placeholder: "Compañia en la que trabaja", class: "form-control"%><br/>
+  <p>Puesto en la organización</p>
+  <select id="puesto" name="puesto" class="form-control">
+    <option id="encuestador">Encuestador</option>
+    <option id="supervisor">Supervisor</option>
+    <option id="coordinador">Coordinador</option>
+    <option id="lider de proyecto">Lider de proyecto</option>
+    <option id="otro">Otro...</option>
+  </select><br/><br/>
   <div class="input-group">
+    <%= text_field_tag 'numero_identificacion', '', placeholder: "Numero de la Identificación que presenta", class: "form-control"%> <br/><br/>
     <p>* Importante para validarte como implementador de Agora Shapes & And forms es necesario que nos facilites el acceso a una identificación oficial vigente, para saber que tus datos son correctos.</p>
-    <a onclick=" $('#file').trigger('click'); "  class="btn btn-danger col-md-4 pull-left"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Cargar Identificación</a>
-    <div id="ttarget" class="pull-left col-md-3"></div>
+    <a onclick=" $('#identificacion').trigger('click'); "  class="btn btn-danger col-md-4 pull-left"><i class="fa fa-file-pdf-o" aria-hidden="true"></i> Cargar Identificación</a>
+    <div id="ttarget" class="pull-left col-md-8"></div>
     <div style="display:none;">
-    <%= file_field_tag 'file', id: 'file' %>
+      <%= file_field_tag 'identificacion', id: 'identificacion' %>
     </div>
   </div>
   
@@ -31,16 +39,17 @@
     <%= link_to 'Ingresar', acceso_a_la_wiki_path, class: 'btn btn-info', style: "width:100%; font-size:18px; margin-bottom:10px;" %>
   </div>
   <div class="col-md-6">
-    <%= submit_tag 'Enviar Código', class: "btn btn-primary pull-right", style: "width:100%; font-size:18px; margin-bottom:10px;" %>
+    <%= submit_tag 'Generar Usuario', class: "btn btn-primary pull-right", style: "width:100%; font-size:18px; margin-bottom:10px;" %>
   </div>
   <br/><br/>
   <%end%>
   <br/><br/>
 </div>
 <div class="col-md-3"></div>
-
 <script type="text/javascript">
-  $("#file").change(function(){
-    readNAME(this,'ttarget');
+  $(document).ready(function(){ 
+    $('#identificacion').on('change',function(){
+     readNAME(this,'ttarget');
+    });
   });
 </script>

@@ -1,2 +1,9 @@
-<h1>Wiki#solicitar_codigo_wiki</h1>
-<p>Find me in app/views/wiki/solicitar_codigo_wiki.html.erb</p>
+<br/><br/><br/>
+<div class="col-md-3"></div>
+<div class="col-md-6 panel panel-default" style="background: #eee; margin-top: 40px; opacity: 0.80;">
+  <center><h2>Gracias por registrarte en Agora</h2></center>
+  <p><%=@message.html_safe%></p><br/><br/>
+  <div class="col-md-3 pull-right">
+  <%= link_to 'Ingresar', acceso_a_la_wiki_path, class: 'btn btn-info pull-right', style: "width:100%; font-size:18px; margin-bottom:10px;" %><br/><br/>
+  </div>
+</div>

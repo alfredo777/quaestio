@@ -1,5 +1,13 @@
 Rails.application.routes.draw do  
   
+  get 'home/acerca_de', as: :about
+  get 'home/contacto', as: :contacto
+  get 'home/precios', as: :precios
+  get 'home/terminos_y_condiciones'
+  get 'home/politicas_de_privacidad'
+  get 'home/poliza_de_privacidad'
+  get 'home/app_nativas', as: :descargas
+
   root 'manager#all'
   get 'manager/all', as: :cuestionarios
   get 'manager/view', as: :ver_formulario
@@ -39,7 +47,12 @@ Rails.application.routes.draw do
   get 'wiki/registro_en_wiki', as: :registro_en_wiki
   get 'wiki/solicitar_codigo_wiki', as: :codigo_wiki
   get 'wiki/find_user_wiki', as: :find_user_wiki
+  post 'wiki/find_user_wiki'
   get 'wiki/ver_tutoriales', as: :tutoriales
   get 'wiki/evaluar_conocimiento_app_moobile', as: :evaluate
+  get 'wiki/register_user_advanced', as: :create_user_wiki
+  post 'wiki/register_user_advanced'
+  get 'wiki/android', as: :android
+  get 'wiki/curso_mobil', as: :mobil
 
 end
