@@ -54,5 +54,7 @@ Rails.application.routes.draw do
   post 'wiki/register_user_advanced'
   get 'wiki/android', as: :android
   get 'wiki/curso_mobil', as: :mobil
+  get 'wiki/finish_session_wiki', as: :finish_session_wiki
+  get 'wiki/datos_user_wiki', as: :datos_user_wiki
 
 end

@@ -62,6 +62,15 @@ class WikiController < ApplicationController
   def curso_mobil
   end
 
+  def datos_user_wiki
+    @wiki_user = WikiUser.find(session[:wiki_user])
+  end
+
+  def finish_session_wiki
+    session[:wiki_user] = nil
+    redirect_to acceso_a_la_wiki_path
+  end
+
   def filter_user_wiki
     if session[:wiki_user] == nil
       redirect_to acceso_a_la_wiki_path
