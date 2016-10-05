@@ -1,6 +1,6 @@
 <h1>Evaluación de Agora para Apps Moviles</h1>
-<center><h2>Presentaste una Evaluación con <%= @total if @questions != 0 %>% de aciertos.</h2></center>
-<% if @questions.nil? %>
+
+<% if @wiki_user.ambiguos_questions.nil? %>
 <%= form_tag create_eval_path do -%>
 <h3>¿Como se instala un nodo en Agora ?</h3>
 <table class="table">
@@ -156,5 +156,7 @@
 <br/><br/>
 <%= submit_tag 'Enviar mis respuestas', class: 'btn btn-primary btn-large pull-right'%>
 <%end%>
+<%else%>
+<center><h2>Presentaste una Evaluación con <%= @total %>% de aciertos.</h2></center>
 <%end%>
 <br/><br/><br/><br/>
