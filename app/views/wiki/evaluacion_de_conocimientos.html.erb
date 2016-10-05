@@ -1,0 +1,160 @@
+<h1>Evaluación de Agora para Apps Moviles</h1>
+<center><h2>Presentaste una Evaluación con <%= @total if @questions != 0 %>% de aciertos.</h2></center>
+<% if @questions == 0 %>
+<%= form_tag create_eval_path do -%>
+<h3>¿Como se instala un nodo en Agora ?</h3>
+<table class="table">
+  <tr>
+    <td>
+      <b>Se agrega la URL y el Nodo</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[1]', true, class: "form-control pull-right", checked: true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se agrega el Nodo</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[1]', false, class: "form-control pull-right" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se agrega la URL</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[1]', false, class: "form-control pull-right" %>
+    </td>
+  </tr>
+</table>
+<br/><br/>
+<h3>¿Como se carga un formulario en Agora ?</h3>
+<table class="table">
+  <tr>
+    <td>
+      <b>Ya esta instalado </b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[2]', false, class: "form-control pull-right", checked: true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se descarga con un código </b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[2]', true, class: "form-control pull-right" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se ingresa a la página y se descarga</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[2]', false, class: "form-control pull-right" %>
+    </td>
+  </tr>
+</table>
+<br/><br/>
+<h3>¿ De que forma se responde un formulario en Agora?</h3>
+<table class="table">
+  <tr>
+    <td>
+      <b>Se Abre, se responde y después de borra</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[3]', false, class: "form-control pull-right", checked: true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se Abre, se responde, se envia y después de reinicia el formulario</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[3]', true, class: "form-control pull-right" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se Abre se responde se envia y se reinicia el proceso</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[3]', false, class: "form-control pull-right" %>
+    </td>
+  </tr>
+</table>
+<br/><br/>
+<h3>¿De que forma se graba un audio en Agora?</h3>
+<table class="table">
+  <tr>
+    <td>
+      <b>Se graba automáticamente </b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[4]', false, class: "form-control pull-right", checked: true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se inicia la grabación y al enviarse se termina</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[4]', false, class: "form-control pull-right" %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>Se inicia dando click en la parte superior derecha y comienza a grabar antes de enviar el formulario se detiene la gravación y se envia. </b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[4]', true, class: "form-control pull-right" %>
+    </td>
+  </tr>
+</table>
+<br/><br/>
+<h3>¿Se puede eliminar un formularios?</h3>
+<table class="table">
+  <tr>
+    <td>
+      <b>Si se puede </b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[5]', true, class: "form-control pull-right", checked: true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>No se puede</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[5]', false, class: "form-control pull-right" %>
+    </td>
+  </tr>
+</table>
+<br/><br/>
+<h3>¿Se pueden instalar mas de un formulario?</h3>
+<table class="table">
+  <tr>
+    <td>
+      <b>Si se puede </b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[6]', true, class: "form-control pull-right", checked: true %>
+    </td>
+  </tr>
+  <tr>
+    <td>
+      <b>No se puede</b>
+    </td>
+    <td>
+      <%= radio_button_tag 'pregunta[6]', false, class: "form-control pull-right" %>
+    </td>
+  </tr>
+</table>
+<br/><br/>
+<%= submit_tag 'Enviar mis respuestas', class: 'btn btn-primary btn-large pull-right'%>
+<%end%>
+<%end%>
+<br/><br/><br/><br/>

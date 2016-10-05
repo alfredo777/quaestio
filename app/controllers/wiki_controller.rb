@@ -66,6 +66,32 @@ class WikiController < ApplicationController
     @wiki_user = WikiUser.find(session[:wiki_user])
   end
 
+  def evaluacion_de_conocimientos
+    @wiki_user = WikiUser.find(session[:wiki_user])
+    @questions = @wiki_user.ambiguos_questions
+    calculus_true =  @wiki_user.ambiguos_questions.where(respuesta: true).count 
+    calculus_totale = @wiki_user.ambiguos_questions.count 
+    @total = calculus_true.to_f / calculus_totale.to_f
+    @total = @total.round(2)
+    @total = @total.to_f * 100;
+  end
+
+  def create_eval
+    @wiki_user = WikiUser.find(session[:wiki_user])
+
+    preguntas = params[:pregunta]
+    preguntas.each do |pregunta|
+      puts pregunta[1]
+      @cuestions = AmbiguosQuestion.new
+      @cuestions.wiki_user_id = @wiki_user.id
+      @cuestions.respuesta = pregunta[1]
+      @cuestions.save
+    end
+
+
+    redirect_to :back
+  end
+
   def finish_session_wiki
     session[:wiki_user] = nil
     redirect_to acceso_a_la_wiki_path

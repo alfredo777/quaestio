@@ -56,5 +56,8 @@ Rails.application.routes.draw do
   get 'wiki/curso_mobil', as: :mobil
   get 'wiki/finish_session_wiki', as: :finish_session_wiki
   get 'wiki/datos_user_wiki', as: :datos_user_wiki
+  get 'wiki/evaluacion_de_conocimientos', as: :evaluacion_de_conocimientos
+  get 'wiki/create_eval', as: :create_eval
+  post 'wiki/create_eval'
 
 end

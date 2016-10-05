@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  wiki_user_id: 1
+  respuesta: false
+
+two:
+  wiki_user_id: 1
+  respuesta: false

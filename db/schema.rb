@@ -11,7 +11,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160928001754) do
+ActiveRecord::Schema.define(version: 20161005035300) do
+
+  create_table "ambiguos_questions", force: :cascade do |t|
+    t.integer  "wiki_user_id"
+    t.boolean  "respuesta"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
 
   create_table "base_de_respuesta", force: :cascade do |t|
     t.string   "contestacion_type"
