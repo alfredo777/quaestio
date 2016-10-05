@@ -8,6 +8,7 @@
     <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
     <%= csrf_meta_tags %>
   </head>
+  <% unless current_user %>
   <div id="video-bg">
     <video playsinline autoplay loop id="myvid" >
       <source src="/agora1.webm" type="video/webm" media="(orientation:landscape)">
@@ -50,6 +51,7 @@
       }
     }
   </style>
+  <%end%>
   <body>
     <%= render partial: "/manager/menu" %>
     <% if current_user %>
