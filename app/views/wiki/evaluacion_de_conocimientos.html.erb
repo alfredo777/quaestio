@@ -1,6 +1,6 @@
 <h1>Evaluación de Agora para Apps Moviles</h1>
 
-<% if @wiki_user.ambiguos_questions.nil? %>
+<% unless @wiki_user.ambiguos_questions.count == 0 %>
 <%= form_tag create_eval_path do -%>
 <h3>¿Como se instala un nodo en Agora ?</h3>
 <table class="table">
