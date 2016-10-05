@@ -5,8 +5,9 @@
 <p style="color:#DF013A"><%= flash[:notice] if flash[:notice] != nil %></p>
 <%= form_tag find_user_wiki_path do -%>
 <div class="input-group">
-  <span class="input-group-addon" id="basic-addon1">#código del sistema d6e1a98adacacb</span>
-  <%= text_field_tag 'code', 'fe44ba32b22866', placeholder: "Ingresa tu código de acceso a la wiki", class: "form-control", 'aria-describedby': "basic-addon1"%>
+<!-- 'fe44ba32b22866'-->
+  <span class="input-group-addon" id="basic-addon1">#código del sistema bbfd597e0a76b9</span>
+  <%= text_field_tag 'code', '', placeholder: "Ingresa tu código de acceso a la wiki", class: "form-control", 'aria-describedby': "basic-addon1"%>
 </div><br/>
 <div class="col-md-6">
 <%= link_to 'Resgistrarse', registro_en_wiki_path, class: 'btn btn-info', style: "width:100%; font-size:18px; margin-bottom:10px;" %>
