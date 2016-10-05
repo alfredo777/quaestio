@@ -1,0 +1,30 @@
+<footer class="navbar navbar-inverse navbar-static-top" style="margin-bottom:0px; background:#000; border:solid #000;">
+    <div class="container">
+      <p class="text-muted">
+        <div class="col-md-4">
+          <center> <%=link_to image_tag('logo-rockstars.png', width: '60%'), 'http://rockstars.mx', target: '_blank' %>
+          <p>Para aclaraciones, dudas y respuestas a <a href="mailto:contacto@rockstars.mx">contacto@rockstars.mx</a></p>
+          </center>
+        </div>
+        <div class="col-md-4">
+          <center>
+          <p>Rockstars.MX © Todos los derechos reservados 2016 | Power by <a href="http://rockstars.mx">Rockstars</a> | <br/> <a> Terminos y condiciones del servicio</a></p>
+          </center>
+        </div>
+        <div class="col-md-4">
+          <div class="pull-right">
+            <%= link_to acceso_a_la_wiki_path do %>
+            <p> Ingresar a la <i class="fa fa-wikipedia-w" aria-hidden="true"></i>iki de Agora</p>
+            <%end%>
+            <%= link_to acceso_a_la_wiki_path do %>
+            <p> Acerca de Agora</p>
+            <%end%>
+            <%= link_to 'http://rockstars.mx' do %>
+            <p> Agora es un producto de Rockstars.MX</p>
+            <%end%>
+            
+          </div>
+        </div>
+      </p>
+    </div>
+  </footer>
