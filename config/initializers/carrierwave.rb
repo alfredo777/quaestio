@@ -12,8 +12,8 @@
    
       # Configuration for Amazon S3
       :provider               => 'AWS',                        # required
-      :aws_access_key_id      => 'AKIAI5H33DUN5VUGC4LQ',       # required
-      :aws_secret_access_key  => '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',    # required
+      :aws_access_key_id      => 'AKIAIZ2JSDFDTROSJG5A',       # required
+      :aws_secret_access_key  => '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',    # required
       #:region                 => 'eu-west-1',                  # optional, defaults to 'us-east-1'
       #:host                   => 's3.example.com',             # optional, defaults to nil
       #:endpoint               => 'https://s3.example.com:8080' # optional, defaults to nil
