@@ -7,15 +7,15 @@ CarrierWave.configure do |config|
       #
       # In Heroku, follow http://devcenter.heroku.com/articles/config-vars
       #
-      # $ heroku config:add S3_KEY=AKIAIZ2JSDFDTROSJG5A S3_SECRET=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 S3_REGION=eu-west-1 S3_ASSET_URL=http://agora.rockstars.mx S3_BUCKET_NAME=agora-shapes-and-forms
+      # $ heroku config:add S3_KEY=AKIAIZ2JSDFDTROSJG5A S3_SECRET=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 S3_REGION=us-west-1 S3_ASSET_URL=http://agora.rockstars.mx S3_BUCKET_NAME=agora-shapes-and-forms
    
       # Configuration for Amazon S3
       :provider               => 'AWS',                        # required
       :aws_access_key_id     => ENV['S3_KEY'],
       :aws_secret_access_key => ENV['S3_SECRET'],
       :region                => ENV['S3_REGION'],
-      :host =>                 'agora.rockstars.mx',             # optional, defaults to nil
-      :endpoint =>              'https://agora-shapes-and-forms.s3-website-us-west-1.amazonaws.com' # optional, defaults to nil
+      #:host =>                 'agora.rockstars.mx',             # optional, defaults to nil
+      #:endpoint =>              'https://agora-shapes-and-forms.s3-website-us-west-1.amazonaws.com' # optional, defaults to nil
 
     }
    
