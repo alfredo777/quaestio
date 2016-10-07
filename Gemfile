@@ -29,6 +29,7 @@ gem "font-awesome-rails"
 gem 'bootstrap-select-rails'
 gem 'highcharts-rails', '~> 4.1', '>= 4.1.9'
 gem 'carrierwave'
+gem 'fog'
 gem "mini_magick"
 gem 'soundmanager2-rails'
 gem "animate-rails"
