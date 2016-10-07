@@ -270,7 +270,11 @@ class ApiController < ApplicationController
     if urlx.nil?
       url = nil
       else
+      if Rails.env == 'production'
+      filename ||= "#{imagenes.full.url}"
+      else
       filename ||= "#{Rails.root}/public#{imagenes.full.url}"
+      end
       #url = File.binread(filename)
       #binary = url.unpack('B*')
       #binary = binary[0]
