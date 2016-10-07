@@ -35,7 +35,8 @@
       <h4>{{titulo}}</h4><br/>
       {{#each imagen}}
       {{#diferent url null}}
-      <img src="{{#host}}{{/host}}{{small.url}}" data-zoom-image="{{#host}}{{/host}}{{full.url}}" class="zooming"/><br/><br/>
+      <img src="{{small.url}}" data-zoom-image="{{full.url}}" class="zooming"/>
+     <!-- <img src="{{#host}}{{/host}}{{small.url}}" data-zoom-image="{{#host}}{{/host}}{{full.url}}" class="zooming"/>--><br/><br/>
       {{/diferent }}
       {{/each}}
       {{descripccion}}<br/><br/>
