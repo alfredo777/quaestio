@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, maximum-scale=1">
+    <title>Agora | Sistema de creación de formularios</title>
+    <%= favicon_link_tag('favicon.png') %>
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+    <%= csrf_meta_tags %>
+  </head>
+
+  <body>
+    <%= render partial: "/manager/menu" %>
+    <div class="container">
+      <%= yield %>
+    </div>
+  </body>
+  <%= render partial: '/home/footer'%>
+</html>
