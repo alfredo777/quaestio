@@ -6,6 +6,7 @@ class ApplicationController < ActionController::Base
 
   helper_method :type_cuestions
   helper_method :type_emogi
+  helper_method :agent
 
 
   def type_cuestions
@@ -17,6 +18,33 @@ class ApplicationController < ActionController::Base
   end
 
   def current_path
+  end
+  
+
+  def agent
+    result  = request.env['HTTP_USER_AGENT']
+    puts result
+      if result =~ /iPhone|Android|iPad/
+        @browser = "Mobile"
+        @mobile = true
+      else
+      case 
+      when result =~ /Chrome/
+        @browser = "Google Chrome"
+        @mobile = false
+      when result =~ /Firefox/
+        @browser = "Firefox"
+        @mobile = false
+      when result =~ /Safari/
+        @browser = "Safari"
+        @mobile = false
+      when result =~ /MSIE/
+        @browser = "Internet Explorer"
+        @mobile = false        
+      end 
+      end
+    puts "********************** #{@browser} / Mobile: #{@mobile} ************************" 
+       @mobile
   end
   protected
 

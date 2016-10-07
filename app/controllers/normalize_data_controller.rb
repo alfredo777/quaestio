@@ -1,144 +1,147 @@
 class NormalizeDataController < ApplicationController
+
   def cuestionario_normalizado
-    array = []
-    array_minimal_procces = []
-    ##### encuentra el cuestionario#########
+
     cuestionario = Cuestionario.find(params[:id])
+
     preguntas = cuestionario.preguntas
-    array_order = []
 
-    opt = []
-    preguntas.each do  |e| 
-      opt.push({"name": "pregunta_#{e.id}"})
+    head_hash = {}
+
+    preguntas.each_with_index do |pregunta, index|
+
+      head_hash["#{pregunta.id}"] = index + 1
+
+      pregunta.respuestas.each_with_index do |respuesta, index|
+
+         head_hash["#{respuesta.id}"] =  index + 1
+      end
     end
-    puts opt
-    opcciones = opt
+
+    head_hash_p = {}
+
+    preguntas.each_with_index do |pregunta, index|
+
+      if pregunta.respuestas.count == 0
+      head_hash_p["#{pregunta.id}"] = 0
+      else
+      head_hash_p["#{pregunta.id}"] = ""
+      end
+
+      pregunta.respuestas.each_with_index do |respuesta, index|
+         head_hash_p["#{respuesta.id}"] =  ""
+      end
+    end
+
+    secon_head_hash_p = {}
+
+    preguntas.each_with_index do |pregunta, index|
+
+      secon_head_hash_p["#{pregunta.titulo}"] = ""
+
+      pregunta.respuestas.each_with_index do |respuesta, index|
+         secon_head_hash_p["#{respuesta.titulo}"] = ""
+      end
+    end
+
+    puts head_hash
+    puts head_hash_p
+    puts secon_head_hash_p
 
 
-    head_n = preguntas.map { |e|  e.respuestas.each_with_index do |r, index| 
-       array_order.push(r.id)  
-       array_order.push(index+1)
-       end 
-    } 
 
-    ###### genera el orden de las preguntas #####
-    array_order = Hash[*array_order]
-    puts array_order
-
-
-    ####### damos un orden predefinido a las respuestas del cuestionario ########
+    body_array = []
     cuestionario.indice_de_creacions.each do |indice|
-      indice.todas_las_respuestas.each_with_index do |respuesta, index|
-        if respuesta.contestacion_type == "Respuesta"
-         cuestionario_respondido_token = indice.idx
-         pregunta = respuesta.contestacion.pregunta
-         nomenclat = "pregunta_#{respuesta.contestacion.pregunta.id}"
-         to_intt = "#{respuesta.valor}".to_i
-         if to_intt == 0
-         valor = "#{respuesta.valor}"
-         valor_de_orden = valor
-         else
-         valor = to_intt
-         valor_de_orden = array_order[valor]
-         end
-         tipo = "#{respuesta.contestacion.pregunta.tipo}"
-         el_valor_ponderado = "#{respuesta.contestacion.titulo}"
-         puts "*****#{respuesta.contestacion.titulo}"
-         
-         else
-         cuestionario_respondido_token = indice.idx
-         pregunta = respuesta.contestacion
-         nomenclat = "pregunta_#{respuesta.contestacion.id}"
-         valor = respuesta.valor.to_i
-         tipo = "#{respuesta.contestacion.tipo}"
-         if tipo != "es"
-         el_valor_ponderado = Respuesta.find(respuesta.valor.to_i).titulo
-         puts el_valor_ponderado
-         valor_de_orden = array_order[valor]
-         else
-         el_valor_ponderado = respuesta.valor
-         valor_de_orden = valor
-         end
+
+      indice.todas_las_respuestas.each_with_index do |objeto, index|
+        access_hash = {}
+
+        if objeto.contestacion_type == "Respuesta"
+        tipo = "#{objeto.contestacion.pregunta.tipo}"
+        else
+        tipo = "#{objeto.contestacion.tipo}"
         end
-        array.push({id: cuestionario_respondido_token,nomenclat: nomenclat, :pregunta => pregunta.titulo,  valor: valor, valor_ponderado: el_valor_ponderado, valor_de_orden: valor_de_orden ,tipo: tipo})
-        array_minimal_procces.push("#{nomenclat}": valor_de_orden)  
-      end
-    end
+        puts objeto.contestacion.id
 
-    puts opcciones
+        puts "#{objeto.valor} ---> #{objeto.contestacion.id} ----> #{tipo}"
 
-   advanced_order = []
-   opcciones.each do |t|
-    resultados = []
-    array.each do |arx|
-      if t[:name] == arx[:nomenclat]
-        resultados.push(arx[:valor_de_orden])
-      end
-    end
-    colum_resultados = ["#{t[:name]}"] + resultados 
+        valoremXc = "#{objeto.valor}"
 
-    advanced_order.push(colum_resultados)
-   end
-   eval_t = []
-
-   len = []
-
-   advanced_order.map { |e| len.push(e.length)  }
-
-   max = len.max
-
-   advanced_order.each_with_index do |avo, index|
-    dif = max - avo.length
-     if dif == 0
-     eval_t.push(avo)
-     else
-        putspush = []
-
-        dif.times do
-          putspush.push(nil)
+        puts "#{valoremXc}"
+        if head_hash["#{valoremXc}"] == nil
+           puts "nulidad"
+           valueXC = "#{objeto.valor}"
+          else 
+           puts "no nulidad ***********"
+           valueXC = head_hash["#{valoremXc}"]
         end
 
-        avo = avo + putspush
-      eval_t.push(avo)
-     end
-   end
-
-   puts eval_t
-
-   array_order_by_row = []
+        puts "#{valoremXc} -----> #{valueXC}"
 
 
-    max.times do |i| 
-      inx = 0
-      array_order_by_row_init = []
-      while inx < opcciones.length  do
-        array_order_by_row_init.push(eval_t[inx][i])
-        inx +=1
+        if tipo == "sl" || tipo == "mtcaval" || tipo == "es"
+          valueXC = valueXC.to_i
+        end
+
+
+        if tipo == "mtcat"
+        objetum = "#{objeto.valor.to_i}"
+        access_hash["#{objetum}"] = valueXC
+        else
+        objetum = "#{objeto.contestacion.id}"
+        access_hash[objetum] = valueXC
+        end
+
+        access_hash[:"value_added"] = objetum
+        access_hash[:"rd_value"] = valueXC
+        access_hash[:"secod_key"] = indice.idx
+        body_array.push(access_hash)
+
       end
-      array_order_by_row.push(array_order_by_row_init) 
+
+
+
+    end
+    
+    puts body_array
+    arrow= []
+    second = body_array.group_by{|h| h[:secod_key]}.each{|_, v| 
+     hashed = {}
+
+     v.map!{|h|  
+      protos =  h[:value_added]
+      campus = h[:rd_value]
+      hashed["#{protos}"] = "#{campus}" 
+     }
+     arrow.push(hashed)
+     }
+    #second = body_array.group_by{|h| h.delete(:secod_key)}.map{|k, v| {value_added: k,  rd_value: v}}
+    puts second
+    puts arrow
+
+    column_names = head_hash_p.keys
+
+    remamed = secon_head_hash_p.keys
+    puts "******EEEEEE #{head_hash_p.count }"
+    csv_string = CSV.generate(:col_sep => ";",  headers: column_names) do |csv|
+      csv << remamed
+      csv << column_names
+      arrow.each do |h|
+      merged = head_hash_p.merge(h)
+      puts "********>>>>>>>>>>> #{merged.count}"
+      csv << merged.values
+     end
     end
 
-
-
-   csv_string = CSV.generate(:col_sep => ";") do |csv|
-     array_order_by_row.each_with_index do |a, index|
-       if index == 0
-       csv <<  ["id"] + a
-       else
-       csv <<  [index] + a
-       end
-     end
-   end
-
-   puts csv_string
-
-
+    puts csv_string
 
     respond_to do |format|
-        format.html
-        format.csv {send_data csv_string, filename: "Base-del-cuestionario-#{cuestionario.titulo}-#{Time.now}.csv"}
-    end
-  
-  end
+      format.js
+      format.csv {send_data csv_string, filename: "Base-del-cuestionario-#{cuestionario.titulo}-#{Time.now}.csv"}
 
+    end
+   end
 end
+
+#{"125_scala"=>"8", "126_sexo"=>"1", "128_Pregunt abiarta"=>"lorem ipsum", "222_lorem "=>"1", "223_a1"=>"lol1", "224_ad2"=>"2lol", "225_afgr4"=>"3lol", "228_e1"=>"1", "229_e2"=>"2", "219_Prueba 1"=>"1", "221_Prueba 1"=>"3"}
+#{"125_scala"=>"6", "126_sexo"=>"2", "128_Pregunt abiarta"=>"lol 2", "222_lorem "=>"2", "223_a1"=>"lorem", "224_ad2"=>"ipsum", "225_afgr4"=>"dolot", "228_e1"=>"1", "229_e2"=>"2", "230_e3"=>"3", "219_Prueba 1"=>"1", "220_Prueba 1"=>"2", "221_Prueba 1"=>"3"}
