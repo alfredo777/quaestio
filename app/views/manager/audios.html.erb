@@ -1,0 +1,47 @@
+<h1>Audios</h1>
+<div id="sm2-container"></div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Dispositivo que envia</th>
+      <th>Audio</th>
+    </tr>
+    <tbody>
+      <% @audios.each do |audio|%>
+      <tr>
+        <td><%= audio.idx %></td>
+        <td >
+         <ul class="graphic">
+         <li><a href="<%= audio.audio_file.url %>" class="sm2_link" width="100%"><%= audio.audio_file.url.split("/").last %></a></li>
+         </ul>
+         </td>
+
+      </tr>
+      <%end%>
+    </tbody>
+  </thead>
+</table>
+
+<script type="text/javascript">
+
+  
+
+  $('.audio-setup').each(function() {
+    $this = $(this);
+   soundManager.setup({
+
+      url: $(this).data('url'),
+      onready: function() {
+        var mySound = soundManager.createSound({
+          id: $(this).attr('id'),
+          url:$(this).data('url')
+        });
+        mySound.play();
+      },
+      ontimeout: function() {
+        // Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
+      }
+    });
+  });
+  
+</script>

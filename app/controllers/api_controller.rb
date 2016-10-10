@@ -1,4 +1,5 @@
 class ApiController < ApplicationController
+  skip_before_filter :verify_authenticity_token, :only => [:create_audios]
   layout "opl"
   def vista_para_respuesta
      @cuestionario = params[:id]
@@ -6,6 +7,21 @@ class ApiController < ApplicationController
 
   def vista_gracias_respuesta
      @cuestionario = Cuestionario.find(params[:id])
+  end
+
+  def create_audios
+    puts "Creación de audio *******************************************"
+    @create_audio = Audio.new
+    @create_audio.audio_file = params[:file]
+    @create_audio.cuestionario_id = params[:value1]
+    @create_audio.idx = params[:value2]
+    @create_audio.save
+
+    if @create_audio.save
+    render json: "#{@create_audio.audio_file}"
+    else
+    render json: "El audio no pudo ser creado"
+    end
   end
 
   def spss_tables

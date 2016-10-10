@@ -43,6 +43,9 @@
         <td>
           <div class=" btn-group pull-right">
             <%= link_to "CSV/SPSS", cuestionario_normalizado_path(id: cuestionario.id, format: "csv"), class:"btn btn-default"%>
+            <%= link_to audios_path(id: cuestionario.id), class: "btn btn-default" do %>
+            <i class="fa fa-music" aria-hidden="true"></i>
+            <%end%>
             <%#= link_to "CSV/SPSS", cuestionario_normalizado_path(id: cuestionario.id), class:"btn btn-default", remote: true%>
 
             <!--<a href='<%="data:text/json;charset=utf-8,#{@json_data.to_json}"%>' download='<%= "#{cuestionario.id}-#{SecureRandom.hex(10)}-data.json" %>'  class="btn btn-default">JSON <i class="fa fa-download" aria-hidden="true"></i></a>-->

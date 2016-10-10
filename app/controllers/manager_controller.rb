@@ -1,7 +1,7 @@
 class ManagerController < ApplicationController
   skip_before_filter :verify_authenticity_token, :only => [:view, :responder]
   before_filter :current_filted_token, :only => [:all, :new, :code_create, :asign_code ]
-  before_action :authenticate_user!, :only => [:all, :view, :new, :create, :edit, :update, :todas_las_respuestas_del_form, :delete, :xml_view_cuestionario, :estadisticas, :pregunta_view, :todas_las_respuestas_n]
+  before_action :authenticate_user!, :only => [:all, :view, :audios, :new, :create, :edit, :update, :todas_las_respuestas_del_form, :delete, :xml_view_cuestionario, :estadisticas, :pregunta_view, :todas_las_respuestas_n]
 
   def all
     @cuestionarios = current_user.cuestionarios.paginate(:page => params[:page], :per_page => 5).order('id DESC')
@@ -10,7 +10,12 @@ class ManagerController < ApplicationController
   def view
     @cuestionario = params[:id]
   end
+  
+  def audios
+    audios = Cuestionario.find(params[:id]).audios
+    @audios = audios.paginate(:page => params[:page], :per_page => 10).order('id DESC')
 
+  end
   def new
     @cuestionario = Cuestionario.new
   end

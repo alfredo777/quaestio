@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  cuestionario_id: 1
+  idx: MyString
+  audio_file: MyString
+
+two:
+  cuestionario_id: 1
+  idx: MyString
+  audio_file: MyString
