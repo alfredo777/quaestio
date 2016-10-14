@@ -14,9 +14,10 @@ data-no-turbolink="true"
       <tr>
         <td><%= audio.idx %></td>
         <td >
-         <ul class="graphic">
-         <li><!--<a href="<%= audio.audio_file.url %>" class="sm2_link" width="100%"><%= audio.audio_file.url.split("/").last %></a>--> <a href="<%= audio.audio_file.url %>" download>Descargar Audio </a></li>
-         </ul>
+          <!--<ul class="graphic">
+         <li><a href="http://192.168.1.71:3000<%= audio.audio_file.url %>" class="sm2_link" width="100%"><%= audio.audio_file.url.split("/").last %></a><a href="<%= audio.audio_file.url %>" download>Descargar Audio </a></li>
+         </ul>-->
+         <a href="<%= audio.audio_file.url %>" download>Descargar Audio </a>
          </td>
 
       </tr>
