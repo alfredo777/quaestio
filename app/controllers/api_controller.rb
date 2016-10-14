@@ -215,8 +215,23 @@ class ApiController < ApplicationController
 
   def json_view_cuestionario
     token = TokenDeDescarga.find_by_token(params[:tokenizer])
+
+
     if token
     cuestionario = token.cuestionario
+
+    dispositivo = Dispositivo.new
+    dispositivo.id_fabrica = params[:dispositivo]
+    dispositivo.modelo = params[:model]
+    dispositivo.plataforma = params[:plataforma]
+    dispositivo.version = params[:version]
+    dispositivo.manufacturado = params[:manufactura]
+    dispositivo.serial = params[:serial]
+    dispositivo.cuestionario_id = cuestionario.id
+    dispositivo.token_de_descarga_id = token.id
+    dispositivo.save
+
+
     preguntas = []
     cuestionario.preguntas.each do |pregunta|
       preguntas.push({

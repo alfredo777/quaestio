@@ -54,7 +54,9 @@
     </style>
     <%end%>
   <%end%>
-  <body>
+  <body <% if content_for?(:body_attributes) %>
+        <%= yield(:body_attributes) %> 
+      <% end %>>
     <%= render partial: "/manager/menu" %>
     <% if current_user %>
     <div class="container">

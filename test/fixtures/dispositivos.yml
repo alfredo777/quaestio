@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id_fabrica: MyString
+  modelo: MyString
+  plataforma: MyString
+  version: MyString
+  manufacturado: MyString
+  serial: MyString
+
+two:
+  id_fabrica: MyString
+  modelo: MyString
+  plataforma: MyString
+  version: MyString
+  manufacturado: MyString
+  serial: MyString

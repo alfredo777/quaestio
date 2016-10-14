@@ -1,7 +1,5 @@
 # encoding: utf-8
-
 class AudioAndMediaUploader < CarrierWave::Uploader::Base
-
   if Rails.env == 'development'
     storage :file
    else

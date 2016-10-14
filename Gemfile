@@ -34,6 +34,8 @@ gem 'fog'
 gem "mini_magick"
 gem 'soundmanager2-rails'
 gem "animate-rails"
+#gem 'carrierwave-audio'
+#gem 'ruby-sox'
 
 # Use ActiveModel has_secure_password
 # gem 'bcrypt', '~> 3.1.7'

@@ -4,6 +4,7 @@ class Cuestionario < ActiveRecord::Base
   has_many :indice_de_creacions, dependent: :destroy
   has_many :token_de_descargas, dependent: :destroy
   has_many :audios
+  has_many :dispositivos
 
   accepts_nested_attributes_for :preguntas, :reject_if => :all_blank, :allow_destroy => true
 

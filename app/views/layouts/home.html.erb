@@ -9,7 +9,9 @@
     <%= csrf_meta_tags %>
   </head>
 
-  <body>
+  <body <% if content_for?(:body_attributes) %>
+        <%= yield(:body_attributes) %> 
+      <% end %>>
     <%= render partial: "/manager/menu" %>
     <div class="container">
       <%= yield %>

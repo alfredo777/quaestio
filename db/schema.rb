@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20161009173157) do
+ActiveRecord::Schema.define(version: 20161013184251) do
 
   create_table "ambiguos_questions", force: :cascade do |t|
     t.integer  "wiki_user_id"
@@ -59,6 +59,19 @@ ActiveRecord::Schema.define(version: 20161009173157) do
     t.boolean  "compartir",     default: true
     t.boolean  "paginar",       default: false
     t.boolean  "privado"
+  end
+
+  create_table "dispositivos", force: :cascade do |t|
+    t.string   "id_fabrica"
+    t.string   "modelo"
+    t.string   "plataforma"
+    t.string   "version"
+    t.string   "manufacturado"
+    t.string   "serial"
+    t.integer  "cuestionario_id"
+    t.integer  "token_de_descarga_id"
+    t.datetime "created_at",           null: false
+    t.datetime "updated_at",           null: false
   end
 
   create_table "indice_de_creacions", force: :cascade do |t|

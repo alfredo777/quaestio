@@ -15,6 +15,7 @@ Rails.application.routes.draw do
   get 'manager/create', as: :cuestionario_create
   post 'manager/create'
   get 'manager/json_view_cuestionario', as: :json_view_cuestionario
+  post 'manager/json_view_cuestionario'
   get 'manager/xml_view_cuestionario', as: :xml_view_cuestionario
   get 'manager/update', as: :update_cuestionario
   get 'manager/responder', as: :responder_cuestionario
