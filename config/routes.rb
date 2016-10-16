@@ -34,6 +34,7 @@ Rails.application.routes.draw do
   get "manager/update_token", as: :update_token
   post "manager/update_token"
   get "manager/audios", as: :audios
+  get "manager/audios_filter_by_fid", as: :audios_filter_by_fid
   devise_for :users, :controllers => { :omniauth_callbacks => "users/omniauth_callbacks"}
   get 'api/vista_para_respuesta'
   get 'api/vista_gracias_respuesta'

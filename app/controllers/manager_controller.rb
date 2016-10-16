@@ -14,6 +14,12 @@ class ManagerController < ApplicationController
   def audios
     audios = Cuestionario.find(params[:id]).audios
     @audios = audios.paginate(:page => params[:page], :per_page => 10).order('id DESC')
+  end
+
+  def audios_filter_by_fid
+    @device = Dispositivo.find(params[:device])
+    audios = Audio.where(idx: params[:id_fabrica])
+    @audios = audios.paginate(:page => params[:page], :per_page => 10).order('id DESC')
 
   end
   def new

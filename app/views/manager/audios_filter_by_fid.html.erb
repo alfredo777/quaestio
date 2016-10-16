@@ -1,0 +1,46 @@
+<% content_for(:body_attributes) do %>
+data-no-turbolink="true"
+<% end %>
+<h1>Audios</h1>
+<div id="sm2-container"></div>
+<div class="row ">
+  <table class="table table-bordered">
+    <thead>
+      <tr>
+        <th class="col-lg-5">Id Fabrica</th>
+        <th class="col-lg-5">Modelo del dispositivo</th>
+        <th class="col-lg-5">Plataforma</th>
+        <th class="col-lg-5">Serial</th>
+        <th class="col-lg-5">Token de descarga</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <%= @device.id_fabrica %> <b><%= @device.manufacturado %></b>
+        </td>
+        <td> <%= @device.modelo %> </td>
+        <td> <%= "#{@device.plataforma}""- #{@device.version}" %></td>
+        <td> <%= @device.serial%></td>
+        <td> <%= @device.token_de_descarga.token %></td>
+      </tr>
+    </tbody>
+  </table>
+  <% @audios.each do |audio|%>
+  <center>
+  <div class="col-md-2 ">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <%= audio.idx %>
+        <%= image_tag('audio.png', width: "100%")%>
+        <%= audio.audio_file.url.split("/").last %><br/>
+        <a href="<%= audio.audio_file.url %>" download>Descargar Audio <i class="fa fa-download" aria-hidden="true"></i> </a>
+      </div>
+    </div>
+  </div>
+  </center>
+  <%end%>
+  <center>
+  <%= will_paginate @audios, renderer: BootstrapPagination::Rails %>
+  </center>
+</div>

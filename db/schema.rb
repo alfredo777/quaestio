@@ -118,10 +118,10 @@ ActiveRecord::Schema.define(version: 20161013184251) do
     t.integer  "pregunta_id"
     t.string   "valor"
     t.boolean  "checkflag"
-    t.datetime "created_at",                null: false
-    t.datetime "updated_at",                null: false
-    t.decimal  "respuesta",   default: 0.0
-    t.decimal  "pase",        default: 0.0
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.integer  "pase",        default: 0
+    t.integer  "respuesta",   default: 0
   end
 
   create_table "token_de_descargas", force: :cascade do |t|

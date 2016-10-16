@@ -14,17 +14,16 @@
   </div>
 </div>
 <%end%>
+
 <br/><br/>
 <div class="row">
-  <div class="col-lg-12">
+  
+<div class="col-lg-6">
     <label>Tokens asignados</label>
-  </div>
-  <div class="col-lg-12">
-    <table class="table">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <th class="col-lg-5">Codigo</th>
-          <th class="col-lg-5">Email</th>
           <th class="col-lg-2">Uso</th>
         </tr>
       </thead>
@@ -32,11 +31,43 @@
         <%  @cuestionario.token_de_descargas.each do |token| %>
         <tr>
           <td> <%= token.token %></td>
-          <td> <%= token.email %></td>
           <td> <%= "Usado" if token.uso %> <%= "Sin utilizar" if !token.uso %> </td>
         </tr>
         <%end%>
       </tbody>
     </table>
+  </div>
+  <div class="col-lg-6">
+   <div class="table-responsive">
+    <label>Dispositivos</label>
+    <table class="table table-bordered">
+      <thead>
+        <tr>
+          <th class="col-lg-5">Id Fabrica</th>
+          <th class="col-lg-5">Modelo del dispositivo</th>
+          <th class="col-lg-5">Plataforma</th>
+          <th class="col-lg-5">Serial</th>
+          <th class="col-lg-5">Token de descarga</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%  @cuestionario.token_de_descargas.each do |token| %>
+         <% token.dispositivos.each do |dispositivo| %>
+        <tr>
+          <td> 
+          <%= link_to audios_filter_by_fid_path(id_fabrica: dispositivo.id_fabrica, device: dispositivo.id) do %>
+            <%= dispositivo.id_fabrica %> <b><%= dispositivo.manufacturado %></b>
+          <%end%>
+          </td>
+          <td> <%= dispositivo.modelo %> </td>
+          <td> <%= "#{dispositivo.plataforma}""- #{dispositivo.version}" %></td>
+          <td> <%= dispositivo.serial%></td>
+          <td> <%= dispositivo.token_de_descarga.token %></td>
+        </tr>
+        <%end%>
+        <%end%>
+      </tbody>
+    </table>
+    </div>
   </div>
 </div>
