@@ -33,7 +33,7 @@ data-no-turbolink="true"
       <div class="panel-body">
         <%= audio.idx %>
         <%= image_tag('audio.png', width: "100%")%>
-        <%= audio.audio_file.url.split("/").last %><br/>
+        <%= audio.created_at.strftime("%d %b. %Y - %H:%M") %><br/>
         <a href="<%= audio.audio_file.url %>" download>Descargar Audio <i class="fa fa-download" aria-hidden="true"></i> </a>
       </div>
     </div>
