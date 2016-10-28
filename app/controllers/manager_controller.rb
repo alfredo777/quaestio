@@ -305,10 +305,12 @@ class ManagerController < ApplicationController
 
     @cuestionario.indice_de_creacions.each do |x|
        puts x.created_at
+       if x.created_at != nil 
        xv = x.created_at.to_date
        xvdt= xv.to_datetime
        xvg = xvdt.to_f * 1000
        grafica_de_estado.push(xvg)
+       end
     end
 
     puts grafica_de_estado
