@@ -331,6 +331,187 @@ class ManagerController < ApplicationController
 
   def pregunta_view
     pregunta = Pregunta.find(params[:id])
+    
+    stats = prepara_stats(pregunta)
+
+    render json: {pregunta: stats}
+  end
+  
+
+  def todas_las_respuestas_n
+    cuestionario = Cuestionario.find(params[:id])
+    preguntas = cuestionario.preguntas
+    respuestas_por_reguntas =[]
+    preguntas.each do |pregunta|
+     resobase = []
+
+     case pregunta.tipo
+      when "mt"
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+             end
+           end
+          end
+        end
+
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+        stata.each do |c|
+         rsp = Respuesta.find(c[0])
+         stata_glose.push({
+          respuesta: rsp.titulo,
+          veces_seleccionada: c[1],
+          porciento: ((c[1].to_f/resobase.size)*100).round(2)
+
+          })
+        end
+      when "mtcaval"
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+             end
+           end
+          end
+        end
+        
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+        stata.each do |s|
+          pregunta.respuestas.each do |r2|
+            r2.volores_multiples_to_respuesta.each do |vmr|
+              if s[0].to_i == vmr.cuantificador_del_valor
+              stata_glose.push({
+                id: r2.id,
+                respuesta: "#{vmr.nombre_del_valor} | #{vmr.cuantificador_del_valor}",
+                veces_seleccionada: s[1],
+                porciento: ((s[1].to_f/resobase.size)*100).round(2)
+              })
+              end
+            end
+          end
+        end
+      when "mtcat"
+        
+        if !pregunta.nil?
+          if pregunta.base_de_respuestas.count != 0
+              pregunta.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+              end
+           end
+        end
+
+        
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+
+        stata.each_with_index do |s, index|
+          puts s
+          rsp = Respuesta.find(s[0])
+          if !rsp.nil?
+          stata_glose.push({
+              id: rsp.id,
+              respuesta: "#{rsp.titulo}",
+              veces_seleccionada: s[1],
+              porciento: ((s[1].to_f/resobase.size)*100).round(2)
+          })
+          end
+        end
+      when "mtca"
+        valores_internos = []
+        pregunta.respuestas.each do |r|
+          if !r.nil?
+           if r.base_de_respuestas.count != 0
+             r.base_de_respuestas.each do |ers|
+               resobase.push([ers.contestacion_id, ers.valor])
+             end
+           end
+          end
+        end
+
+        stata = Hash.new(0)
+        stata_glose = []
+
+        resobase.map { |x| stata[x] += 1 }
+        stata.each do |c|
+         rsp = Respuesta.find(c[0][0])
+
+         stata_glose.push({
+          id: rsp.id,
+          respuesta: rsp.titulo,
+          veces_seleccionada: c[0][1],
+          porciento: ""
+
+          })
+        end
+      when "ab"
+       pregunta.base_de_respuestas.each_with_index  do |r, index|
+        resobase.push(
+          respuesta: r.valor
+          )
+        end
+        stata_glose = resobase
+
+      when "es"
+
+        pregunta.base_de_respuestas.each_with_index  do |r, index|
+        resobase.push(
+           r.valor
+          )
+        end
+        stata_glose = []
+        stata = Hash.new(0)
+        resobase.map { |x| stata[x] += 1 }
+        stata.each do |c|
+         stata_glose.push({
+          respuesta: c[0],
+          veces_seleccionada: c[1],
+          porciento: ((c[1].to_f/resobase.size)*100).round(2)
+          })
+        end
+
+      when "sl"
+       pregunta.base_de_respuestas.each do |r|
+        resobase.push(r.valor)
+        end
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+        stata.each do |c|
+         rsp = Respuesta.find(c[0])
+         stata_glose.push({
+          respuesta: rsp.titulo,
+          veces_seleccionada: c[1],
+          porciento: ((c[1].to_f/resobase.size)*100).round(2)
+          })
+        end
+      end
+
+      respuestas_por_reguntas.push(
+        id: pregunta.id,
+        tipo: pregunta.tipo,
+        titulo: pregunta.titulo,
+        descripccion: pregunta.descripccion,
+        imagen: pregunta.imagen,
+        estadisticas_de_respuesta: stata_glose
+      )
+    end
+
+
+    render json: {pregunta: respuestas_por_reguntas}
+  end
+
+  def prepara_stats(pregunta)
     respuestas_por_reguntas =[]
     resobase = []
 
@@ -434,179 +615,6 @@ class ManagerController < ApplicationController
         resobase.map { |x| stata[x] += 1 }
         stata.each do |c|
          rsp = Respuesta.find(c[0][0])
-         stata_glose.push({
-          id: rsp.id,
-          respuesta: rsp.titulo,
-          veces_seleccionada: c[1],
-          porciento: (c[0][1].to_f).round(2)
-
-          })
-        end
-      when "ab"
-       pregunta.base_de_respuestas.each_with_index  do |r, index|
-        resobase.push(
-          respuesta: r.valor
-          )
-        end
-        stata_glose = resobase
-
-      when "es"
-
-        pregunta.base_de_respuestas.each_with_index  do |r, index|
-        resobase.push(
-           r.valor
-          )
-        end
-        stata_glose = []
-        stata = Hash.new(0)
-        resobase.map { |x| stata[x] += 1 }
-        stata.each do |c|
-         stata_glose.push({
-          respuesta: c[0],
-          veces_seleccionada: c[1],
-          porciento: ((c[1].to_f/resobase.size)*100).round(2)
-          })
-        end
-
-      when "sl"
-       pregunta.base_de_respuestas.each do |r|
-        resobase.push(r.valor)
-        end
-        stata = Hash.new(0)
-        stata_glose = []
-        resobase.map { |x| stata[x] += 1 }
-        stata.each do |c|
-         rsp = Respuesta.find(c[0])
-         stata_glose.push({
-          respuesta: rsp.titulo,
-          veces_seleccionada: c[1],
-          porciento: ((c[1].to_f/resobase.size)*100).round(2)
-          })
-        end
-      end
-
-        respuestas_por_reguntas.push(
-          id: pregunta.id,
-          tipo: pregunta.tipo,
-          titulo: pregunta.titulo,
-          estadisticas_de_respuesta: stata_glose
-        )
-
-
-
-    render json: {pregunta: respuestas_por_reguntas}
-  end
-  
-
-  def todas_las_respuestas_n
-    cuestionario = Cuestionario.find(params[:id])
-    preguntas = cuestionario.preguntas
-    respuestas_por_reguntas =[]
-    preguntas.each do |pregunta|
-      resobase = []
-
-     case pregunta.tipo
-      when "mt"
-        pregunta.respuestas.each do |r|
-          if !r.nil?
-           if r.base_de_respuestas.count != 0
-             r.base_de_respuestas.each do |ers|
-               resobase.push(ers.valor)
-             end
-           end
-          end
-        end
-
-        stata = Hash.new(0)
-        stata_glose = []
-        resobase.map { |x| stata[x] += 1 }
-        stata.each do |c|
-         rsp = Respuesta.find(c[0])
-         stata_glose.push({
-          id: rsp.id,
-          respuesta: rsp.titulo,
-          veces_seleccionada: c[1],
-          porciento: ((c[1].to_f/resobase.size)*100).round(2)
-
-          })
-        end
-      when "mtcat"
-        
-        if !pregunta.nil?
-          if pregunta.base_de_respuestas.count != 0
-              pregunta.base_de_respuestas.each do |ers|
-               resobase.push(ers.valor)
-              end
-           end
-        end
-
-        
-        stata = Hash.new(0)
-        stata_glose = []
-        resobase.map { |x| stata[x] += 1 }
-
-
-        stata.each_with_index do |s, index|
-          puts s
-          rsp = Respuesta.find(s[0])
-          if !rsp.nil?
-          puts rsp.id
-          stata_glose.push({
-              id: rsp.id,
-              respuesta: "#{rsp.titulo}",
-              veces_seleccionada: s[1],
-              porciento: ((s[1].to_f/resobase.size)*100).round(2)
-          })
-          end
-        end
-       when "mtcaval"
-        pregunta.respuestas.each do |r|
-          if !r.nil?
-           if r.base_de_respuestas.count != 0
-             r.base_de_respuestas.each do |ers|
-               resobase.push(ers.valor)
-             end
-           end
-          end
-        end
-        
-        stata = Hash.new(0)
-        stata_glose = []
-        resobase.map { |x| stata[x] += 1 }
-
-        stata.each_with_index do |s, index|
-          rsp = Respuesta.find(s[index])
-          pregunta.respuestas.each do |r2|
-            r2.volores_multiples_to_respuesta.each do |vmr|
-              if s[0].to_i == vmr.cuantificador_del_valor
-              stata_glose.push({
-                id: r2.id,
-                respuesta: "#{vmr.nombre_del_valor} | #{vmr.cuantificador_del_valor}",
-                veces_seleccionada: s[1],
-                porciento: ((s[1].to_f/resobase.size)*100).round(2)
-              })
-              end
-            end
-          end
-        end
-      when "mtca"
-        valores_internos = []
-        pregunta.respuestas.each do |r|
-          if !r.nil?
-           if r.base_de_respuestas.count != 0
-             r.base_de_respuestas.each do |ers|
-               resobase.push([ers.contestacion_id, ers.valor])
-             end
-           end
-          end
-        end
-
-        stata = Hash.new(0)
-        stata_glose = []
-
-        resobase.map { |x| stata[x] += 1 }
-        stata.each do |c|
-         rsp = Respuesta.find(c[0][0])
 
          stata_glose.push({
           id: rsp.id,
@@ -636,11 +644,9 @@ class ManagerController < ApplicationController
         resobase.map { |x| stata[x] += 1 }
         stata.each do |c|
          stata_glose.push({
-          id: "",
           respuesta: c[0],
           veces_seleccionada: c[1],
           porciento: ((c[1].to_f/resobase.size)*100).round(2)
-
           })
         end
 
@@ -654,11 +660,9 @@ class ManagerController < ApplicationController
         stata.each do |c|
          rsp = Respuesta.find(c[0])
          stata_glose.push({
-          id: rsp.id,
           respuesta: rsp.titulo,
           veces_seleccionada: c[1],
           porciento: ((c[1].to_f/resobase.size)*100).round(2)
-
           })
         end
       end
@@ -667,14 +671,11 @@ class ManagerController < ApplicationController
         id: pregunta.id,
         tipo: pregunta.tipo,
         titulo: pregunta.titulo,
-        descripccion: pregunta.descripccion,
-        imagen: pregunta.imagen,
         estadisticas_de_respuesta: stata_glose
       )
-    end
 
+      @r = respuestas_por_reguntas
 
-    render json: {pregunta: respuestas_por_reguntas}
   end
   
   def current_filted_token
