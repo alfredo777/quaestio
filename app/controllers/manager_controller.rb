@@ -407,7 +407,7 @@ class ManagerController < ApplicationController
         stata.each_with_index do |s, index|
           puts s
           rsp = Respuesta.find(s[0])
-          if !s.nil?
+          if !rsp.nil?
           stata_glose.push({
               id: rsp.id,
               respuesta: "#{rsp.titulo}",
@@ -547,13 +547,17 @@ class ManagerController < ApplicationController
 
 
         stata.each_with_index do |s, index|
+          puts s
           rsp = Respuesta.find(s[0])
+          if !rsp.nil?
+          puts rsp.id
           stata_glose.push({
               id: rsp.id,
               respuesta: "#{rsp.titulo}",
               veces_seleccionada: s[1],
               porciento: ((s[1].to_f/resobase.size)*100).round(2)
           })
+          end
         end
        when "mtcaval"
         pregunta.respuestas.each do |r|
