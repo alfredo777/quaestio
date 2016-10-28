@@ -22,21 +22,3 @@ data-no-turbolink="true"
   <%= will_paginate @audios, renderer: BootstrapPagination::Rails %>
   </center>
 </div>
-<script type="text/javascript">
-$('.audio-setup').each(function() {
-$this = $(this);
-soundManager.setup({
-url: $(this).data('url'),
-onready: function() {
-var mySound = soundManager.createSound({
-id: $(this).attr('id'),
-url:$(this).data('url')
-});
-mySound.play();
-},
-ontimeout: function() {
-// Hrmm, SM2 could not start. Missing SWF? Flash blocked? Show an error, etc.?
-}
-});
-});
-</script>
