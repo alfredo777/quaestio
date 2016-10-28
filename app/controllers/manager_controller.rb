@@ -405,6 +405,7 @@ class ManagerController < ApplicationController
 
 
         stata.each_with_index do |s, index|
+          puts s
           rsp = Respuesta.find(s[0])
           stata_glose.push({
               id: rsp.id,
