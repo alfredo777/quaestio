@@ -407,12 +407,14 @@ class ManagerController < ApplicationController
         stata.each_with_index do |s, index|
           puts s
           rsp = Respuesta.find(s[0])
+          if !s.nil?
           stata_glose.push({
               id: rsp.id,
               respuesta: "#{rsp.titulo}",
               veces_seleccionada: s[1],
               porciento: ((s[1].to_f/resobase.size)*100).round(2)
           })
+          end
         end
       when "mtca"
         valores_internos = []
