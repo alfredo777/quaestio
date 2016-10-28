@@ -309,7 +309,13 @@ Handlebars.registerHelper('typ', function(tipo, options) {
     out = "Selección Multiple";
   }
   if (tipo == "mtca"){
-    out = "Selección Multiple campo Abierto";
+    out = "Bateria de atributos";
+  }
+  if (tipo == "mtcaval"){
+    out = "Batería de atributos con preguntas varias";
+  }
+  if (tipo == "mtcat"){
+    out = "Batería de atributos con escala";
   }
   return out;
 });

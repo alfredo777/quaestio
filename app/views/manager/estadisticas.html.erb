@@ -5,6 +5,8 @@
       <h2><%=@cuestionario.titulo%></h2>
       <h3><%=@cuestionario.instrucciones%></h3>
       <a onclick='loadTPLAPI("todas_las_respuestas_n", {id: <%=@cuestionario.id%>}, "respuesta_stata", "stata")' style="cursor:pointer;"> <div class="col-md-6" style="background: #efefef; padding: 5px;"><center> <h4>Total de Respuestas <h1><b style="color:#D358F7"><%=@cuestionario.indice_de_creacions.count%></b></h1></h4> </center> </div></a>
+      <%= link_to audios_path(id: @cuestionario.id)do %>
+      <div class="col-md-6" style="background: #efefef; padding: 5px;"><center> <h4>Total de Audios<h1><b style="color:#D358F7"><%=@cuestionario.audios.count%></b></h1></h4> </center> </div> <%end%>
       <table class="table">
         <tr>
           <th>Pregunta</th>

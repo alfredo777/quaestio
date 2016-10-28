@@ -112,9 +112,6 @@ class ManagerController < ApplicationController
       end
     end
 
-
-    
-
    # @json = {cuestionario: cuestionario, respondido_desglozado: respuestas, respondido_por_preguntas: respuestas_por_reguntas}
    @json = respuestas
    #@json = respuestas_por_reguntas
@@ -138,8 +135,6 @@ class ManagerController < ApplicationController
     end
     redirect_to :back
   end
-
-  
 
   def delete
     @cuestionario =  Cuestionario.find(params[:id])
@@ -173,17 +168,13 @@ class ManagerController < ApplicationController
       })
     end
     
-    render json: {cuestionario: cuestionario, preguntas: preguntas}
-
-    
+    render json: {cuestionario: cuestionario, preguntas: preguntas}    
   end
 
 
   def respuestas_accces_function(id)
     @respuestas = Respuesta.where(pregunta_id: id);
-
     respuestas = []
-    
     @respuestas.each do |r|
     respuestas.push({
       id: r.id,
@@ -397,6 +388,31 @@ class ManagerController < ApplicationController
             end
           end
         end
+      when "mtcat"
+        
+        if !pregunta.nil?
+          if pregunta.base_de_respuestas.count != 0
+              pregunta.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+              end
+           end
+        end
+
+        
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+
+        stata.each_with_index do |s, index|
+          rsp = Respuesta.find(s[0])
+          stata_glose.push({
+              id: rsp.id,
+              respuesta: "#{rsp.titulo}",
+              veces_seleccionada: s[1],
+              porciento: ((s[1].to_f/resobase.size)*100).round(2)
+          })
+        end
       when "mtca"
         valores_internos = []
         pregunta.respuestas.each do |r|
@@ -511,7 +527,32 @@ class ManagerController < ApplicationController
 
           })
         end
-      when "mtcaval"
+      when "mtcat"
+        
+        if !pregunta.nil?
+          if pregunta.base_de_respuestas.count != 0
+              pregunta.base_de_respuestas.each do |ers|
+               resobase.push(ers.valor)
+              end
+           end
+        end
+
+        
+        stata = Hash.new(0)
+        stata_glose = []
+        resobase.map { |x| stata[x] += 1 }
+
+
+        stata.each_with_index do |s, index|
+          rsp = Respuesta.find(s[0])
+          stata_glose.push({
+              id: rsp.id,
+              respuesta: "#{rsp.titulo}",
+              veces_seleccionada: s[1],
+              porciento: ((s[1].to_f/resobase.size)*100).round(2)
+          })
+        end
+       when "mtcaval"
         pregunta.respuestas.each do |r|
           if !r.nil?
            if r.base_de_respuestas.count != 0
@@ -526,7 +567,8 @@ class ManagerController < ApplicationController
         stata_glose = []
         resobase.map { |x| stata[x] += 1 }
 
-        stata.each do |s|
+        stata.each_with_index do |s, index|
+          rsp = Respuesta.find(s[index])
           pregunta.respuestas.each do |r2|
             r2.volores_multiples_to_respuesta.each do |vmr|
               if s[0].to_i == vmr.cuantificador_del_valor
@@ -558,11 +600,12 @@ class ManagerController < ApplicationController
         resobase.map { |x| stata[x] += 1 }
         stata.each do |c|
          rsp = Respuesta.find(c[0][0])
+
          stata_glose.push({
           id: rsp.id,
           respuesta: rsp.titulo,
-          veces_seleccionada: c[1],
-          porciento: (c[0][1].to_f).round(2)
+          veces_seleccionada: c[0][1],
+          porciento: ""
 
           })
         end
@@ -613,14 +656,14 @@ class ManagerController < ApplicationController
         end
       end
 
-        respuestas_por_reguntas.push(
-          id: pregunta.id,
-          tipo: pregunta.tipo,
-          titulo: pregunta.titulo,
-          descripccion: pregunta.descripccion,
-          imagen: pregunta.imagen,
-          estadisticas_de_respuesta: stata_glose
-        )
+      respuestas_por_reguntas.push(
+        id: pregunta.id,
+        tipo: pregunta.tipo,
+        titulo: pregunta.titulo,
+        descripccion: pregunta.descripccion,
+        imagen: pregunta.imagen,
+        estadisticas_de_respuesta: stata_glose
+      )
     end
 
 
