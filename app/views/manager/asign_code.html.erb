@@ -55,7 +55,7 @@
          <% token.dispositivos.each do |dispositivo| %>
         <tr>
           <td> 
-          <%= link_to audios_filter_by_fid_path(id_fabrica: dispositivo.id_fabrica, device: dispositivo.id) do %>
+          <%= link_to audios_filter_by_fid_path(id_fabrica: dispositivo.id_fabrica, device: dispositivo.id, cuestionario: params[:id]) do %>
             <%= dispositivo.id_fabrica %> <b><%= dispositivo.manufacturado %></b>
           <%end%>
           </td>
