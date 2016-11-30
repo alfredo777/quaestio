@@ -14,28 +14,30 @@
     <%end%>
   </fieldset >
   <div class="battery-questions">
-    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/abierta' do %>
-    Abierta
-    <%end%>
-    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_simple' do %>
-    Multiple Básica
-    <%end%>
-    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_simple_rango' do %>
+    <div class="btn-group" >
+      <%= link_to_add_association f, :preguntas, :class => 'btn btn-default btn-sm', partial: '/manager/fields/abierta' do %>
+      Abierta
+      <%end%>
+      <%= link_to_add_association f, :preguntas, :class => 'btn btn-default btn-sm', partial: '/manager/fields/multiple_simple' do %>
+      Multiple Básica
+      <%end%>
+      <%= link_to_add_association f, :preguntas, :class => 'btn btn-default btn-sm', partial: '/manager/fields/multiple_simple_rango' do %>
       Dicotómica (si/no)
-    <%end%>
-    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/escala' do %>
-    Escala
-    <%end%>
-    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_campo_abierto' do %>
+      <%end%>
+      <%= link_to_add_association f, :preguntas, :class => 'btn btn-default btn-sm', partial: '/manager/fields/escala' do %>
+      Escala
+      <%end%>
+      <%= link_to_add_association f, :preguntas, :class => 'btn btn-default btn-sm', partial: '/manager/fields/multiple_campo_abierto' do %>
       Batería de atributos
-    <%end%>
-    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_valores_abiertos' do %>
+      <%end%>
+      <%= link_to_add_association f, :preguntas, :class => 'btn btn-default btn-sm', partial: '/manager/fields/multiple_valores_abiertos' do %>
       Batería de Atributos con preguntas varias
-    <%end%>
-    <%= link_to_add_association f, :preguntas, :class => 'btn btn-info', partial: '/manager/fields/multiple_con_categorias' do %>
+      <%end%>
+      <%= link_to_add_association f, :preguntas, :class => 'btn btn-default btn-sm', partial: '/manager/fields/multiple_con_categorias' do %>
       Batería de Atributos con Escala
-    <%end%>
-    <%= f.submit 'Publicar el cuestionario', class: "btn btn-success pull-right"%>
+      <%end%>
+      <%= f.submit 'Publicar el cuestionario', class: "btn btn-success btn-sm"%>
+    </div>
   </div>
   <%end%>
   <script type="text/javascript">
