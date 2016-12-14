@@ -49,8 +49,13 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
+    if Rails.env.production?
+    devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
+    devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
+    else
     devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
     devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
+    end
   end
 
 end
