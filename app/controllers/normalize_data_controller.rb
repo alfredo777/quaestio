@@ -58,9 +58,9 @@ class NormalizeDataController < ApplicationController
         puts ">>>>>>>>>>>>>>> #{objeto.contestacion_type}"
         puts "!!!!! #{ objeto.contestacion }"
         if objeto.contestacion_type == "Respuesta"
-          if objeto.contestacion.pregunta.nil?
+          if objeto.contestacion.nil?
           puts "nulidad ***"
-          tipo = "nula"
+          tipo = "sin respuesta"
           else
           tipo = "#{objeto.contestacion.pregunta.tipo}"
           end
