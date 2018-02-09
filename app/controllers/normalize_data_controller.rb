@@ -57,7 +57,12 @@ class NormalizeDataController < ApplicationController
         access_hash = {}
 
         if objeto.contestacion_type == "Respuesta"
-        tipo = "#{objeto.contestacion.pregunta.tipo}"
+          if objeto.contestacion.pregunta.nil?
+          puts "nulidad ***"
+          tipo = "nula"
+          else
+          tipo = "#{objeto.contestacion.pregunta.tipo}"
+          end
         else
         tipo = "#{objeto.contestacion.tipo}"
         end
