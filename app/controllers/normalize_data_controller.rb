@@ -95,8 +95,10 @@ class NormalizeDataController < ApplicationController
         objetum = "#{objeto.valor.to_i}"
         access_hash["#{objetum}"] = valueXC
         else
-        objetum = "#{objeto.contestacion.id}"
-        access_hash[objetum] = valueXC
+          unless objeto.contestacion.nil?
+          objetum = "#{objeto.contestacion.id}"
+          access_hash[objetum] = valueXC
+          end
         end
 
         access_hash[:"value_added"] = objetum
