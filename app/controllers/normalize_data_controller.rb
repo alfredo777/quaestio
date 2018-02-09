@@ -67,9 +67,10 @@ class NormalizeDataController < ApplicationController
         else
         tipo = "#{objeto.contestacion.tipo}"
         end
+        unless objeto.contestacion.nil?
         puts objeto.contestacion.id
-
         puts "#{objeto.valor} ---> #{objeto.contestacion.id} ----> #{tipo}"
+        end
 
         valoremXc = "#{objeto.valor}"
 
