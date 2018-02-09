@@ -55,7 +55,8 @@ class NormalizeDataController < ApplicationController
 
       indice.todas_las_respuestas.each_with_index do |objeto, index|
         access_hash = {}
-
+        puts ">>>>>>>>>>>>>>> #{objeto.contestacion_type}"
+        puts "!!!!! #{ objeto.contestacion }"
         if objeto.contestacion_type == "Respuesta"
           if objeto.contestacion.pregunta.nil?
           puts "nulidad ***"
