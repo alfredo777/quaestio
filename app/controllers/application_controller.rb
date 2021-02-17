@@ -7,6 +7,13 @@ class ApplicationController < ActionController::Base
   helper_method :type_cuestions
   helper_method :type_emogi
   helper_method :agent
+  helper_method :year_act
+
+  def year_act
+    date = Date.today
+    year  = date.strftime('%Y')
+    return year
+  end
 
 
   def type_cuestions
@@ -49,13 +56,13 @@ class ApplicationController < ActionController::Base
   protected
 
   def configure_permitted_parameters
-    if Rails.env.production?
+    #if Rails.env.production?
     devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
     devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
-    else
-    devise_parameter_sanitizer.for(:sign_up) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
-    end
+    #else
+    #devise_parameter_sanitizer.permit(:sign_up) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
+    #devise_parameter_sanitizer.permit(:account_update) { |u| u.permit(:name, :image, :email, :password, :password_confirmation, :remember_me, :current_password, :validation_by_token)}
+    #end
   end
 
 end
